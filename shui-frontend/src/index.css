@@ -3,3 +3,11 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+
+:root {
+	/* BG color */
+	--main-bg-color: #3697da;
+
+	/* Text color */
+	--white-text-color: #ffffff;
+}
