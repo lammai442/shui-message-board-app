@@ -4,21 +4,30 @@ import { useRef, useState } from 'react';
 import { users } from '../../data/data.js';
 import { IoEyeSharp } from 'react-icons/io5';
 import { IoIosEyeOff } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import { loginApi } from '../../api/auth.js';
 function LoginForm() {
 	const usernameRef = useRef();
 	const passwordRef = useRef();
+	const navigate = useNavigate();
 	const [showPsw, setShowPsw] = useState(false);
 	const login = useAuthStore((state) => state.login);
 
 	const loginUser = async (e) => {
 		e.preventDefault();
-
-		const userExist = users.some(
-			(user) =>
-				user.username === usernameRef.current.value &&
-				user.password === passwordRef.current.value
-		);
-		console.log(userExist);
+		const result = await loginApi({
+			username: usernameRef.current.value,
+			password: passwordRef.current.value,
+		});
+		if (result) {
+			// Om det lyckas att logga in så läggs usern in i AuthStore
+			login({
+				username: usernameRef.current.value,
+				token: result.data.token,
+			});
+			// Om det lyckas att verifiera användaren så directas man till homePage
+			navigate('/');
+		}
 	};
 	return (
 		<form className='form'>
