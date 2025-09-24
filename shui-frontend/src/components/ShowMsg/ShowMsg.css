@@ -1,0 +1,10 @@
+.show-msg__box {
+}
+
+.show-msg__success {
+	background-color: var(--main-bg-color);
+}
+
+.show-msg__false {
+	background-color: red;
+}
