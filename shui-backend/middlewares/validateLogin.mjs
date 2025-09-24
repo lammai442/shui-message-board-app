@@ -1,5 +1,5 @@
 import { loginSchema } from '../models/loginSchema.mjs';
-export const validateUser = () => ({
+export const validateLogin = () => ({
 	before: (handler) => {
 		if (!handler.event.body) throw new Error('No body provided');
 
