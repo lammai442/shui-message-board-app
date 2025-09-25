@@ -13,11 +13,7 @@ export const loginApi = async (data) => {
 			return error;
 		});
 
-	if (response.status === 200) {
-		return response;
-	} else {
-		return response.response.data.message;
-	}
+	return response;
 };
 
 export const registerApi = async (data) => {
@@ -32,9 +28,5 @@ export const registerApi = async (data) => {
 		.catch((error) => {
 			return error;
 		});
-	if (response.status === 201) {
-		return response;
-	} else {
-		return response.data.message;
-	}
+	return response;
 };

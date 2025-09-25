@@ -1,14 +1,20 @@
+import { useMessageStore } from '../../stores/useMessageStore';
 import './ShowMsg.css';
 
-function ShowMsg({ message, success }) {
-	console.log(message, success);
+function ShowMsg() {
+	const { message, visible, success, hideMsg } = useMessageStore();
+
+	if (!visible) return null;
+
+	// setTimeout(() => {
+	// 	hideMsg();
+	// }, 3000);
 
 	return (
-		<div
-			className={`show-msg__box ${
-				success ? 'show-msg__success' : 'show-msg__false'
-			}`}>
-			<p>{message}</p>
+		<div className='overlay' onClick={() => hideMsg()}>
+			<p className={`popup ${success ? 'success' : 'error'}`}>
+				{message}
+			</p>
 		</div>
 	);
 }

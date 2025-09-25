@@ -15,6 +15,8 @@ export const registerUser = async (user) => {
 					username: { S: user.username },
 					password: { S: await hashPassword(user.password) },
 					email: { S: user.email },
+					avatar: { S: user.avatarUrl },
+					gender: { S: user.gender },
 				},
 			},
 		},

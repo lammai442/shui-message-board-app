@@ -15,6 +15,24 @@
 	font-size: 1.2rem;
 }
 
+.form__label-genders {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	font-size: 1.2rem;
+}
+
+.form__input-gender {
+	vertical-align: middle;
+	margin-left: 0.3rem;
+}
+
+.form__avatar-img {
+	max-width: 150px;
+	align-self: center;
+}
+
 .form__input {
 	padding: 0.5rem;
 	font-size: 1.2rem;

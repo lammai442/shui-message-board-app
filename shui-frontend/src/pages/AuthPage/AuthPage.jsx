@@ -1,8 +1,11 @@
 import './AuthPage.css';
 import shuiLogoWhite from '../../assets/logo/shui-logo-white.svg';
 import LoginForm from '../../components/LoginForm/LoginForm';
+import { useState } from 'react';
+import RegisterForm from '../../components/RegisterForm/RegisterForm';
 
 function LoginPage() {
+	const [loginForm, setLoginForm] = useState(true);
 	return (
 		<div>
 			<section className='auth__top-hero'>
@@ -13,7 +16,11 @@ function LoginPage() {
 				/>
 			</section>
 			<main className='auth__main-wrapper'>
-				<LoginForm />
+				{loginForm ? (
+					<LoginForm setLoginForm={setLoginForm} />
+				) : (
+					<RegisterForm setLoginForm={setLoginForm} />
+				)}
 			</main>
 		</div>
 	);
