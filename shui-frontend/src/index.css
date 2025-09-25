@@ -6,8 +6,28 @@
 
 :root {
 	/* BG color */
-	--main-bg-color: #3697da;
+	--main-bg-color: #3697da; /* original blå */
+	--main-bg-color-light: #5eb0e0; /* ljusare blå */
+	--main-bg-color-dark: #2473a0; /* mörkare blå */
+	--main-bg-color-muted: #8bbfe5; /* mer “tonad” blå */
+	--main-bg-color-accent: #da6b36; /* komplementfärg, orange/brun */
+	--main-bg-color-soft: #cce5f7; /* mycket ljus blå, som bakgrund */
+	--main-bg-color-gradient-start: #3697da; /* för gradient */
+	--main-bg-color-gradient-end: #1e5f8a; /* mörkare blå för gradient */
+
+	--btn-bg-color: #5eb0e0;
 
 	/* Text color */
 	--white-text-color: #ffffff;
+	--error-text-color: #f50000;
+
+	--font-size-base: 1rem;
+	--font-size-h1: 2rem;
+	--font-size-h2: 1.75rem;
+	--font-size-h3: 1.5rem;
+	--font-size-h4: 1.25rem;
+	--font-size-large-p: 1.25rem;
+	--font-size-small-p: 1rem;
+	--font-size-large-btn: 1.5rem;
+	--font-size-small-btn: 1rem;
 }

@@ -8,41 +8,56 @@ import { registerApi } from '../../api/auth.js';
 import ShowMsg from '../ShowMsg/ShowMsg.jsx';
 import { generateNb } from '../../utils/generateNb.js';
 import { useMessageStore } from '../../stores/useMessageStore.js';
+import { validateUser } from '../../utils/validateUser.js';
+
 function RegisterForm({ setLoginForm }) {
 	const usernameRef = useRef();
 	const passwordRef = useRef();
 	const emailRef = useRef();
 	const navigate = useNavigate();
 	const [showPsw, setShowPsw] = useState(false);
-	const showMsg = useMessageStore((state) => state.showMsg);
 	const [avatarNb, setAvatarNb] = useState(1);
 	const [gender, setGender] = useState('man');
+	const [errorFormMsg, setErrorFormMsg] = useState(null);
+	const showMsg = useMessageStore((state) => state.showMsg);
 	const login = useAuthStore((state) => state.login);
 
 	const registerUser = async (e) => {
 		e.preventDefault();
-		const response = await registerApi({
-			username: usernameRef.current.value,
-			password: passwordRef.current.value,
-			email: emailRef.current.value,
-			avatarUrl: `https://avatar.iran.liara.run/public/${avatarNb}`,
-			gender: gender,
-		});
 
-		if (response.status === 201) {
-			// Om det lyckas att registreras så läggs usern in i AuthStore
-			login({
+		const validateForm = validateUser(
+			usernameRef.current.value,
+			passwordRef.current.value,
+			emailRef.current.value
+		);
+
+		if (validateForm) {
+			setErrorFormMsg(validateForm);
+		} else {
+			setErrorFormMsg(null);
+			const response = await registerApi({
 				username: usernameRef.current.value,
-				token: response.data.token,
+				password: passwordRef.current.value,
+				email: emailRef.current.value,
+				avatarUrl: `/avatars/avatar${avatarNb}`,
+				gender: gender,
 			});
 
-			showMsg(
-				`Registreringen lyckades! Välkommen till gemenskapen ${usernameRef.current.value}`,
-				true,
-				() => navigate('/')
-			);
-		} else {
-			showMsg('Användarnamnet finns inte i databasen', false);
+			console.log(response);
+
+			if (response.status === 201) {
+				// Om det lyckas att registreras så läggs usern in i AuthStore
+				login({
+					username: usernameRef.current.value,
+					token: response.data.token,
+				});
+
+				showMsg(`Registreringen lyckades! Lets Shui`, true, () =>
+					navigate('/')
+				);
+			} else {
+				setErrorFormMsg('Användarnamnet är redan upptagen');
+			}
 		}
 	};
 
@@ -53,7 +68,7 @@ function RegisterForm({ setLoginForm }) {
 				<h1 className='form__title'>Register</h1>
 				<img
 					className='form__avatar-img'
-					src={`https://avatar.iran.liara.run/public/${avatarNb}`}
+					src={`/avatars/avatar${avatarNb}.png`}
 					alt='Image of avator'
 				/>
 				<div className='form__label-genders'>
@@ -66,7 +81,7 @@ function RegisterForm({ setLoginForm }) {
 							value='man'
 							checked={gender === 'man'}
 							onChange={(e) => {
-								setAvatarNb(generateNb(0, 50));
+								setAvatarNb(generateNb(1, 8));
 								setGender('man');
 							}}
 						/>
@@ -80,18 +95,19 @@ function RegisterForm({ setLoginForm }) {
 							value='woman'
 							checked={gender === 'woman'}
 							onChange={(e) => {
-								setAvatarNb(generateNb(50, 100));
+								setAvatarNb(generateNb(9, 16));
 								setGender('woman');
 							}}
 						/>
 					</label>
 					<button
+						className='form__gender-btn'
 						type='button'
 						onClick={() =>
 							setAvatarNb(
 								gender === 'man'
-									? generateNb(0, 50)
-									: generateNb(50, 100)
+									? generateNb(1, 8)
+									: generateNb(9, 16)
 							)
 						}>
 						Byt bild
@@ -139,7 +155,8 @@ function RegisterForm({ setLoginForm }) {
 						required
 					/>
 				</label>
-				<button className='form__button' type='submit'>
+				{errorFormMsg && <p className='error_msg'>{errorFormMsg}</p>}
+				<button className='form__btn' type='submit'>
 					Registrera
 				</button>
 				<p className='form__text'>

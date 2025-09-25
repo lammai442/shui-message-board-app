@@ -29,7 +29,7 @@ function LoginForm({ setLoginForm }) {
 				token: response.data.token,
 			});
 
-			showMsg('Inloggning lyckades! \nLets Shui!', true, () =>
+			showMsg('Inloggning lyckades! Lets Shui!', true, () =>
 				navigate('/')
 			);
 		} else {
@@ -71,8 +71,8 @@ function LoginForm({ setLoginForm }) {
 					/>
 				)}
 			</label>
-			<button className='form__button' type='submit'>
-				Login
+			<button className='form__btn' type='submit'>
+				LOGIN
 			</button>
 			<p className='form__text'>
 				Inget konto?{' '}

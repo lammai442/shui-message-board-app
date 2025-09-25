@@ -6,18 +6,19 @@
 
 .form__title {
 	text-align: center;
+	font-size: var(--font-size-h1);
 }
 
 .form__label {
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	font-size: 1.2rem;
+	font-size: var(--font-size-h3);
 }
 
 .form__input {
 	padding: 0.5rem;
-	font-size: 1.2rem;
+	font-size: var(--font-size-large-p);
 	border-radius: 5px;
 }
 
@@ -26,4 +27,12 @@
 	right: 5%;
 	top: 50%;
 	font-size: 1.2rem;
+}
+
+.form__btn {
+	padding: 1rem;
+	font-size: var(--font-size-large-btn);
+	border: none;
+	background-color: var(--btn-bg-color);
+	color: var(--white-text-color);
 }
