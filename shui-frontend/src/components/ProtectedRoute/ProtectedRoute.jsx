@@ -1,7 +1,7 @@
 import { useAuthStore } from '../../stores/useAuthStore';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-function ProtectedRoute({ children }) {
+function ProtectedRoute() {
 	// Hämtar hem state för om det finns någon inloggad user
 	const user = useAuthStore((state) => state.user);
 
@@ -9,7 +9,7 @@ function ProtectedRoute({ children }) {
 		return <Navigate to='/auth' replace />;
 	}
 
-	return children;
+	return <Outlet />;
 }
 
 export default ProtectedRoute;

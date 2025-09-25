@@ -21,12 +21,15 @@ function LoginForm({ setLoginForm }) {
 			password: passwordRef.current.value,
 		});
 
+		console.log(response);
+
 		if (response.status === 200) {
 			// Om det lyckas att logga in så läggs usern in i AuthStore
 
 			login({
 				username: usernameRef.current.value,
 				token: response.data.token,
+				avatar: response.data.avatar,
 			});
 
 			showMsg('Inloggning lyckades! Lets Shui!', true, () =>

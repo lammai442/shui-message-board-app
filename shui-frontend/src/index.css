@@ -2,6 +2,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 :root {
@@ -14,6 +15,8 @@
 	--main-bg-color-soft: #cce5f7; /* mycket ljus blå, som bakgrund */
 	--main-bg-color-gradient-start: #3697da; /* för gradient */
 	--main-bg-color-gradient-end: #1e5f8a; /* mörkare blå för gradient */
+	--white-bg-color: #ffffff;
+	--black-bg-color: #000;
 
 	--btn-bg-color: #5eb0e0;
 
@@ -30,4 +33,13 @@
 	--font-size-small-p: 1rem;
 	--font-size-large-btn: 1.5rem;
 	--font-size-small-btn: 1rem;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+}
+
+li {
+	list-style-type: none;
 }

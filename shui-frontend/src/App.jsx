@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage/HomePage';
 import AuthPage from './pages/AuthPage/AuthPage';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ShowMsg from './components/ShowMsg/ShowMsg';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 				{/* ProtectedRoute skyddar så att ifall man inte är inloggad så kommer man navigeras till AuthPage */}
 				<Route element={<ProtectedRoute />}>
 					<Route path='/' element={<HomePage />} />
+					<Route path='/profile' element={<ProfilePage />} />
 				</Route>
 			</Routes>
 			<ShowMsg />

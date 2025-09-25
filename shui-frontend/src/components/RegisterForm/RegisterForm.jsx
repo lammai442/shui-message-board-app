@@ -43,8 +43,6 @@ function RegisterForm({ setLoginForm }) {
 				gender: gender,
 			});
 
-			console.log(response);
-
 			if (response.status === 201) {
 				// Om det lyckas att registreras så läggs usern in i AuthStore
 				login({

@@ -22,6 +22,7 @@ export const handler = middy(async (event) => {
 			});
 			return sendResponses(200, {
 				message: 'User logged in successfully',
+				avatar: response.attributes.avatar,
 				token: `Bearer ${token}`,
 			});
 		} else {

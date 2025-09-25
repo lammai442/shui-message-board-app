@@ -1,7 +1,12 @@
+import Header from '../../components/Header/Header';
 import './HomePage.css';
 
 function HomePage() {
-	return <div>HomePage</div>;
+	return (
+		<div>
+			<Header title={'HEM'} />
+		</div>
+	);
 }
 
 export default HomePage;
