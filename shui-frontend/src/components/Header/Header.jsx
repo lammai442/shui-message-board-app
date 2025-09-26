@@ -8,8 +8,6 @@ function Header({ title }) {
 
 	return (
 		<header className='header'>
-			<HamburgerMenu />
-			<h2 className='header__title'>{title}</h2>
 			<button
 				className='header__logo-btn'
 				onClick={() => {
@@ -17,6 +15,8 @@ function Header({ title }) {
 				}}>
 				<Logo style={'header__logo'} />
 			</button>
+			<h2 className='header__title'>{title}</h2>
+			<HamburgerMenu />
 		</header>
 	);
 }

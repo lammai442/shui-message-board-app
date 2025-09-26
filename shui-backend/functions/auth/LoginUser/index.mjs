@@ -23,7 +23,10 @@ export const handler = middy(async (event) => {
 			return sendResponses(200, {
 				message: 'User logged in successfully',
 				avatar: response.attributes.avatar,
-				token: `Bearer ${token}`,
+				email: response.attributes.email,
+				username: response.attributes.username,
+				token: token,
+				gender: response.attributes.gender,
 			});
 		} else {
 			return sendResponses(400, { message: 'Wrong password' });

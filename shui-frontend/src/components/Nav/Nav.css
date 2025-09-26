@@ -1,17 +1,31 @@
 .nav {
 	position: fixed;
 	top: 0;
-	left: -60%;
+	right: -60%;
 	width: 60%;
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	border-right: 1px solid black;
-	transition: left 0.5s ease-in-out;
+	border-left: 1px solid rgba(0, 0, 0, 0.4);
+	transition: right 0.5s ease-in-out;
+	background-color: var(--white-bg-color);
+	z-index: 900;
+}
+
+.nav__overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 40%;
+	height: 100vh;
+}
+
+.nav__closed {
+	right: -60%;
 }
 
 .nav__open {
-	left: 0;
+	right: 0;
 }
 
 .nav__profile-box {
@@ -26,10 +40,50 @@
 	width: 100px;
 }
 
+.nav__profile-title {
+	color: var(--white-text-color);
+}
+
 .nav__logut-btn {
 	padding: 1rem;
 	font-size: var(--font-size-large-btn);
 	border: none;
 	background-color: var(--btn-bg-color);
 	color: var(--white-text-color);
+}
+
+.nav__links {
+	width: 100%;
+	padding: 1rem;
+	color: var(--black-text-color);
+	font-size: var(--font-size-large-p);
+	display: grid;
+	grid-template-columns: 12% 76% 12%;
+	gap: 0.2rem;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.nav__links:active {
+	background-color: var(--main-bg-color-soft);
+}
+
+.nav__item-content {
+	margin-left: 0.3rem;
+}
+
+.nav__item-icon {
+	width: 100%;
+	align-self: center;
+	font-size: 3rem;
+}
+
+.nav__item-title {
+	color: var(--black-text-color);
+	font-size: var(--font-size-large-p);
+}
+
+.nav__item-subtitle {
+	color: var(--black-text-color);
+	font-size: var(--font-size-small-p);
+	font-weight: lighter;
 }

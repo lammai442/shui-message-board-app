@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-family: 'Inter', sans-serif;
 }
 
 :root {
@@ -22,6 +24,7 @@
 
 	/* Text color */
 	--white-text-color: #ffffff;
+	--black-text-color: #000;
 	--error-text-color: #f50000;
 
 	--font-size-base: 1rem;
@@ -42,4 +45,8 @@ button {
 
 li {
 	list-style-type: none;
+}
+
+.main__wrapper {
+	padding: 1rem;
 }

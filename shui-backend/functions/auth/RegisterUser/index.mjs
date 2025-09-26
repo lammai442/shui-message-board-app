@@ -4,6 +4,7 @@ import { getUser, registerUser } from '../../../services/users.mjs';
 import { sendResponses } from '../../../responses/index.mjs';
 import { errorHandler } from '../../../middlewares/errorHandler.mjs';
 import { validateUser } from '../../../middlewares/validateUser.mjs';
+import { generateToken } from '../../../utils/jwt.mjs';
 
 export const handler = middy(async (event) => {
 	const existingUser = await getUser(event.body.username);
@@ -11,7 +12,17 @@ export const handler = middy(async (event) => {
 	if (!existingUser) {
 		const response = await registerUser(event.body);
 		if (response) {
-			return sendResponses(201, { message: 'User created successfully' });
+			const token = generateToken({
+				username: event.body.username,
+			});
+			return sendResponses(201, {
+				message: 'User created successfully',
+				avatar: response.avatar,
+				email: response.email,
+				username: response.username,
+				token: `Bearer ${token}`,
+				gender: response.gender,
+			});
 		} else {
 			return sendResponses(404, { message: 'User could not be created' });
 		}

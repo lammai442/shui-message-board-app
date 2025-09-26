@@ -25,14 +25,15 @@ function RegisterForm({ setLoginForm }) {
 	const registerUser = async (e) => {
 		e.preventDefault();
 
-		const validateForm = validateUser(
-			usernameRef.current.value,
-			passwordRef.current.value,
-			emailRef.current.value
-		);
+		const validateUserForm = validateUser({
+			username: usernameRef.current.value,
+			password: passwordRef.current.value,
+			email: emailRef.current.value,
+		});
 
-		if (validateForm) {
-			setErrorFormMsg(validateForm);
+		setErrorFormMsg(null);
+		if (validateUserForm) {
+			setErrorFormMsg(validateUserForm);
 		} else {
 			setErrorFormMsg(null);
 			const response = await registerApi({
@@ -46,8 +47,11 @@ function RegisterForm({ setLoginForm }) {
 			if (response.status === 201) {
 				// Om det lyckas att registreras så läggs usern in i AuthStore
 				login({
-					username: usernameRef.current.value,
+					username: response.data.username,
 					token: response.data.token,
+					avatar: response.data.avatar,
+					email: response.data.email,
+					gender: response.data.gender,
 				});
 
 				showMsg(`Registreringen lyckades! Lets Shui`, true, () =>
@@ -61,7 +65,6 @@ function RegisterForm({ setLoginForm }) {
 
 	return (
 		<>
-			<ShowMsg message={'hej'} success={true} />
 			<form className='form' onSubmit={registerUser}>
 				<h1 className='form__title'>Register</h1>
 				<img

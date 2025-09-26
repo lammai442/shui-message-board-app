@@ -4,6 +4,7 @@ import AuthPage from './pages/AuthPage/AuthPage';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ShowMsg from './components/ShowMsg/ShowMsg';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import MessagePage from './pages/MessagePage/MessagePage';
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 				<Route element={<ProtectedRoute />}>
 					<Route path='/' element={<HomePage />} />
 					<Route path='/profile' element={<ProfilePage />} />
+					<Route path='/messages' element={<MessagePage />} />
 				</Route>
 			</Routes>
 			<ShowMsg />
