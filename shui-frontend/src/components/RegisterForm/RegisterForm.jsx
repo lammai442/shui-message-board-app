@@ -20,7 +20,7 @@ function RegisterForm({ setLoginForm }) {
 	const [gender, setGender] = useState('man');
 	const [errorFormMsg, setErrorFormMsg] = useState(null);
 	const showMsg = useMessageStore((state) => state.showMsg);
-	const login = useAuthStore((state) => state.login);
+	const updateUserStorage = useAuthStore((state) => state.updateUserStorage);
 
 	const registerUser = async (e) => {
 		e.preventDefault();
@@ -40,13 +40,13 @@ function RegisterForm({ setLoginForm }) {
 				username: usernameRef.current.value,
 				password: passwordRef.current.value,
 				email: emailRef.current.value,
-				avatarUrl: `/avatars/avatar${avatarNb}`,
+				avatar: `/avatars/avatar${avatarNb}`,
 				gender: gender,
 			});
 
 			if (response.status === 201) {
 				// Om det lyckas att registreras så läggs usern in i AuthStore
-				login({
+				updateUserStorage({
 					username: response.data.username,
 					token: response.data.token,
 					avatar: response.data.avatar,

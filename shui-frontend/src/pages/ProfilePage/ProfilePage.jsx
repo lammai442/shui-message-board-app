@@ -10,7 +10,7 @@ import { validateUser } from '../../utils/validateUser';
 import { updateUserApi } from '../../api/auth';
 
 function ProfilePage() {
-	const { avatar, username, email, gender } = useAuthStore(
+	const { avatar, username, email, gender, token } = useAuthStore(
 		(state) => state.user
 	);
 	const usernameRef = useRef();
@@ -19,14 +19,20 @@ function ProfilePage() {
 	const confirmPasswordRef = useRef();
 	const emailRef = useRef();
 	const [showPsw, setShowPsw] = useState(false);
-	const [avatarNb, setAvatarNb] = useState(avatar.slice(-1));
+	const [avatarNb, setAvatarNb] = useState(avatar.slice(15));
 	const [activeGender, setactiveGender] = useState(gender);
 	const [errorFormMsg, setErrorFormMsg] = useState(null);
 	const showMsg = useMessageStore((state) => state.showMsg);
-	const login = useAuthStore((state) => state.login);
+	const updateUserStorage = useAuthStore((state) => state.updateUserStorage);
 	const user = useAuthStore((state) => state.user);
 	const navigate = useNavigate();
 
+	const handleFocus = () => {
+		setErrorFormMsg('Användarnamn går inte att ändra');
+		setTimeout(() => {
+			setErrorFormMsg(null);
+		}, 3000);
+	};
 	const fields = [
 		{
 			label: 'Användarnamn',
@@ -34,11 +40,11 @@ function ProfilePage() {
 			value: username,
 			readOnly: true,
 			ref: usernameRef,
+			onFocus: handleFocus,
 		},
 		{
 			label: 'Gamla lösenordet',
 			type: showPsw ? 'text' : 'password',
-			value: 'Abc123',
 			ref: oldPasswordRef,
 			showPassword: true,
 		},
@@ -60,22 +66,32 @@ function ProfilePage() {
 		if (validateForm !== null) {
 			setErrorFormMsg(validateForm);
 		} else {
-		}
-		const response = await updateUserApi({
-			username: usernameRef.current.value,
-			password: oldPasswordRef.current.value,
-			email: emailRef.current.value,
-			avatarUrl: `/avatars/avatar${avatarNb}`,
-			gender: activeGender,
-		});
-		console.log(response);
+			const response = await updateUserApi({
+				username: usernameRef.current.value,
+				password: oldPasswordRef.current.value,
+				email: emailRef.current.value,
+				avatar: `/avatars/avatar${avatarNb}`,
+				gender: activeGender,
+			});
 
-		if (response.data.message === 'Token is invalid') {
-			showMsg(
-				`Du har varit inaktiv för länge och behöver logga in igen`,
-				false,
-				() => navigate('/auth')
-			);
+			if (response.data.message === 'Token is invalid') {
+				showMsg(
+					`Du har varit inaktiv för länge och behöver logga in igen`,
+					false,
+					() => navigate('/auth')
+				);
+			}
+			if (response.status === 200) {
+				updateUserStorage({
+					username: response.data.username,
+					token: token,
+					avatar: response.data.avatar,
+					email: response.data.email,
+					gender: response.data.gender,
+				});
+
+				showMsg('Dina ändringar är sparade', true);
+			}
 		}
 	};
 

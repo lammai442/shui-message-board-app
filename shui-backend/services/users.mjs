@@ -66,9 +66,11 @@ export const updateUser = async (user) => {
 			PK: { S: `USER#${user.username}` },
 			SK: { S: 'PROFILE' },
 		},
-		UpdateExpression: 'SET attributes.email = :newEmail',
+		UpdateExpression:
+			'SET attributes.email = :newEmail, attributes.avatar = :newAvatar',
 		ExpressionAttributeValues: {
 			':newEmail': { S: user.email },
+			':newAvatar': { S: user.avatar },
 		},
 		ReturnValues: 'ALL_NEW',
 		// attributes: {

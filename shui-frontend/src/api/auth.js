@@ -56,7 +56,7 @@ export const updateUserApi = async (data) => {
 			data,
 			{
 				headers: {
-					Authorization: `Bearer s${token}`,
+					Authorization: `Bearer ${token}`,
 				},
 			}
 		)

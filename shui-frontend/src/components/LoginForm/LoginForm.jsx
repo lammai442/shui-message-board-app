@@ -12,7 +12,7 @@ function LoginForm({ setLoginForm }) {
 	const navigate = useNavigate();
 	const [showPsw, setShowPsw] = useState(false);
 	const showMsg = useMessageStore((state) => state.showMsg);
-	const login = useAuthStore((state) => state.login);
+	const updateUserStorage = useAuthStore((state) => state.updateUserStorage);
 
 	const loginUser = async (e) => {
 		e.preventDefault();
@@ -23,7 +23,7 @@ function LoginForm({ setLoginForm }) {
 
 		if (response.status === 200) {
 			// Om det lyckas att logga in så läggs usern in i AuthStore
-			login({
+			updateUserStorage({
 				username: response.data.username,
 				token: response.data.token,
 				avatar: response.data.avatar,

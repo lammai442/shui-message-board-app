@@ -12,6 +12,6 @@ export const userSchema = Joi.object({
 		})
 		.required(),
 	email: Joi.string().email().required(),
-	avatarUrl: Joi.string().required(),
+	avatar: Joi.string().required(),
 	gender: Joi.string().valid('man', 'woman').required(),
 });

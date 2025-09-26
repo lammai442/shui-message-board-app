@@ -18,6 +18,7 @@ function FormField({ field }) {
 				defaultValue={field.value}
 				readOnly={field.readOnly}
 				required={!field.readOnly}
+				onFocus={field.onFocus}
 			/>
 			{field.showPassword && (
 				<span
