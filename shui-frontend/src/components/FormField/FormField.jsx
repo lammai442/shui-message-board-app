@@ -1,6 +1,7 @@
 import { IoEyeSharp } from 'react-icons/io5';
 import { IoIosEyeOff } from 'react-icons/io';
 import { useState } from 'react';
+import './FormField.css';
 
 function FormField({ field }) {
 	const [showPsw, setShowPsw] = useState(false);
@@ -17,7 +18,7 @@ function FormField({ field }) {
 				ref={field.ref}
 				defaultValue={field.value}
 				readOnly={field.readOnly}
-				required={!field.readOnly}
+				required={field.required}
 				onFocus={field.onFocus}
 			/>
 			{field.showPassword && (

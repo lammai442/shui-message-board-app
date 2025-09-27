@@ -7,10 +7,9 @@ import { useMessageStore } from '../../stores/useMessageStore';
 import { generateNb } from '../../utils/generateNb';
 import FormField from '../../components/FormField/FormField';
 import { validateUser } from '../../utils/validateUser';
-import { updateUserApi } from '../../api/auth';
 
 function ProfilePage() {
-	const { avatar, username, email, gender, token } = useAuthStore(
+	const { avatar, username, email, gender } = useAuthStore(
 		(state) => state.user
 	);
 	const usernameRef = useRef();
@@ -18,14 +17,12 @@ function ProfilePage() {
 	const newPasswordRef = useRef();
 	const confirmPasswordRef = useRef();
 	const emailRef = useRef();
-	const [showPsw, setShowPsw] = useState(false);
 	const [avatarNb, setAvatarNb] = useState(avatar.slice(15));
 	const [activeGender, setactiveGender] = useState(gender);
 	const [errorFormMsg, setErrorFormMsg] = useState(null);
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const updateUserStorage = useAuthStore((state) => state.updateUserStorage);
 	const user = useAuthStore((state) => state.user);
-	const navigate = useNavigate();
 
 	const handleFocus = () => {
 		setErrorFormMsg('Användarnamn går inte att ändra');
@@ -44,58 +41,81 @@ function ProfilePage() {
 		},
 		{
 			label: 'Gamla lösenordet',
-			type: showPsw ? 'text' : 'password',
+			type: 'password',
 			ref: oldPasswordRef,
+			value: 'Abc1234',
 			showPassword: true,
+			required: false,
 		},
-		// { label: 'Nytt lösenord', type: 'password', ref: newPasswordRef },
-		// {
-		// 	label: 'Bekräfta lösenord',
-		// 	type: 'password',
-		// 	ref: confirmPasswordRef,
-		// },
-		{ label: 'Email', type: 'email', value: email, ref: emailRef },
+		{
+			label: 'Nytt lösenord',
+			type: 'text',
+			ref: newPasswordRef,
+			value: 'Abc1234',
+			required: false,
+		},
+		{
+			label: 'Bekräfta lösenord',
+			type: 'text',
+			ref: confirmPasswordRef,
+			value: 'Abc1234',
+			required: false,
+		},
+		{
+			label: 'Email',
+			type: 'email',
+			value: email,
+			ref: emailRef,
+			required: false,
+		},
 	];
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		let password = oldPasswordRef.current.value;
+		console.log(password);
 
 		setErrorFormMsg(null);
-		const validateForm = validateUser({ email: emailRef.current.value });
+		const validateForm = validateUser({
+			email: emailRef.current.value,
+			password: {
+				oldPassword: oldPasswordRef.current.value,
+				newPassword: newPasswordRef.current.value,
+				confirmPassword: confirmPasswordRef.current.value,
+			},
+		});
 
 		if (validateForm !== null) {
 			setErrorFormMsg(validateForm);
 		} else {
-			const response = await updateUserApi({
-				username: usernameRef.current.value,
-				password: oldPasswordRef.current.value,
-				email: emailRef.current.value,
-				avatar: `/avatars/avatar${avatarNb}`,
-				gender: activeGender,
-			});
-
-			if (response.data.message === 'Token is invalid') {
-				showMsg(
-					`Du har varit inaktiv för länge och behöver logga in igen`,
-					false,
-					() => navigate('/auth')
-				);
-			}
-			if (response.status === 200) {
-				updateUserStorage({
-					username: response.data.username,
-					token: token,
-					avatar: response.data.avatar,
-					email: response.data.email,
-					gender: response.data.gender,
-				});
-
-				showMsg('Dina ändringar är sparade', true);
-			}
+			// const response = await updateUserApi({
+			// 	username: usernameRef.current.value,
+			// 	password: oldPasswordRef.current.value,
+			// 	email: emailRef.current.value,
+			// 	avatar: `/avatars/avatar${avatarNb}`,
+			// 	gender: activeGender,
+			// });
+			// if (response.data.message === 'Token is invalid') {
+			// 	showMsg(
+			// 		`Du har varit inaktiv för länge och behöver logga in igen`,
+			// 		false,
+			// 		() => navigate('/auth')
+			// 	);
+			// }
+			// if (response.status === 200) {
+			// 	updateUserStorage({
+			// 		username: response.data.username,
+			// 		token: token,
+			// 		avatar: response.data.avatar,
+			// 		email: response.data.email,
+			// 		gender: response.data.gender,
+			// 	});
+			// 	showMsg('Dina ändringar är sparade', true);
+			// }
+			showMsg('Dina ändringar är sparade', true);
 		}
 	};
 
-	// showMsg(`Dina ändringar lyckades!`, true);
 	return (
 		<div>
 			<Header title={'ÄNDRA PROFIL'} />
