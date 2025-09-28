@@ -34,7 +34,9 @@ function LoginForm({ setLoginForm }) {
 			showMsg('Inloggning lyckades! Lets Shui!', true, () =>
 				navigate('/')
 			);
-		} else {
+		} else if (response.data.message === 'Wrong password')
+			showMsg('Fel lösenord', false);
+		else {
 			showMsg('Användarnamnet finns inte i databasen', false);
 		}
 	};

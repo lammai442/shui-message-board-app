@@ -7,6 +7,7 @@ import { useMessageStore } from '../../stores/useMessageStore';
 import { generateNb } from '../../utils/generateNb';
 import FormField from '../../components/FormField/FormField';
 import { validateUser } from '../../utils/validateUser';
+import { updateUserApi } from '../../api/auth';
 
 function ProfilePage() {
 	const { avatar, username, email, gender } = useAuthStore(
@@ -17,6 +18,7 @@ function ProfilePage() {
 	const newPasswordRef = useRef();
 	const confirmPasswordRef = useRef();
 	const emailRef = useRef();
+	const navigate = useNavigate();
 	const [avatarNb, setAvatarNb] = useState(avatar.slice(15));
 	const [activeGender, setactiveGender] = useState(gender);
 	const [errorFormMsg, setErrorFormMsg] = useState(null);
@@ -43,7 +45,7 @@ function ProfilePage() {
 			label: 'Gamla lösenordet',
 			type: 'password',
 			ref: oldPasswordRef,
-			value: 'Abc1234',
+			value: 'Abc123',
 			showPassword: true,
 			required: false,
 		},
@@ -51,14 +53,14 @@ function ProfilePage() {
 			label: 'Nytt lösenord',
 			type: 'text',
 			ref: newPasswordRef,
-			value: 'Abc1234',
+			value: 'Mamma12',
 			required: false,
 		},
 		{
 			label: 'Bekräfta lösenord',
 			type: 'text',
 			ref: confirmPasswordRef,
-			value: 'Abc1234',
+			value: 'Mamma12',
 			required: false,
 		},
 		{
@@ -72,47 +74,69 @@ function ProfilePage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		let password = oldPasswordRef.current.value;
-		console.log(password);
+		let password = {
+			oldPassword: oldPasswordRef.current.value,
+			newPassword: newPasswordRef.current.value,
+			confirmPassword: confirmPasswordRef.current.value,
+		};
+		// Om användaren inte fyller i något nytt lösenord
+		if (
+			password.oldPassword === '' &&
+			password.newPassword === '' &&
+			password.confirmPassword === ''
+		) {
+			password = null;
+		}
 
 		setErrorFormMsg(null);
 		const validateForm = validateUser({
 			email: emailRef.current.value,
-			password: {
-				oldPassword: oldPasswordRef.current.value,
-				newPassword: newPasswordRef.current.value,
-				confirmPassword: confirmPasswordRef.current.value,
-			},
+			password: password,
 		});
 
 		if (validateForm !== null) {
 			setErrorFormMsg(validateForm);
 		} else {
-			// const response = await updateUserApi({
-			// 	username: usernameRef.current.value,
-			// 	password: oldPasswordRef.current.value,
-			// 	email: emailRef.current.value,
-			// 	avatar: `/avatars/avatar${avatarNb}`,
-			// 	gender: activeGender,
-			// });
-			// if (response.data.message === 'Token is invalid') {
-			// 	showMsg(
-			// 		`Du har varit inaktiv för länge och behöver logga in igen`,
-			// 		false,
-			// 		() => navigate('/auth')
-			// 	);
-			// }
-			// if (response.status === 200) {
-			// 	updateUserStorage({
-			// 		username: response.data.username,
-			// 		token: token,
-			// 		avatar: response.data.avatar,
-			// 		email: response.data.email,
-			// 		gender: response.data.gender,
-			// 	});
-			// 	showMsg('Dina ändringar är sparade', true);
-			// }
-			showMsg('Dina ändringar är sparade', true);
+			// Om användaren har fyllt i inputs för nytt password annars blir den null
+			if (password)
+				password = {
+					oldPassword: oldPasswordRef.current.value,
+					newPassword: newPasswordRef.current.value,
+				};
+
+			const response = await updateUserApi({
+				username: usernameRef.current.value,
+				password: password,
+				email: emailRef.current.value,
+				avatar: `/avatars/avatar${avatarNb}`,
+				gender: activeGender,
+			});
+			console.log(response);
+
+			if (response.status !== 200) {
+				return setErrorFormMsg(response.data.message);
+			}
+
+			if (response.data.message === 'Token is invalid') {
+				return showMsg(
+					`Du har varit inaktiv för länge och behöver logga in igen`,
+					false,
+					() => navigate('/auth')
+				);
+			}
+			if (response.status === 200) {
+				updateUserStorage({
+					username: response.data.username,
+					token: user.token,
+					avatar: response.data.avatar,
+					email: response.data.email,
+					gender: response.data.gender,
+				});
+				oldPasswordRef.current.value = '';
+				newPasswordRef.current.value = '';
+				confirmPasswordRef.current.value = '';
+				showMsg('Dina ändringar är sparade', true);
+			}
 		}
 	};
 

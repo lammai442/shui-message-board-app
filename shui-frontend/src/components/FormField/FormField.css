@@ -1,0 +1,4 @@
+.form__showpassword {
+	display: grid;
+	place-content: center;
+}

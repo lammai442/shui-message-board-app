@@ -11,7 +11,6 @@ export const validateUser = ({ username, password, email }) => {
 		if (typeof password === 'object') {
 			for (let key in password) {
 				if (!passwordPattern.test(password[key])) {
-					console.log(key);
 					let inputField = '';
 					if (key === 'oldPassword') inputField = 'Gamla lösenordet';
 					if (key === 'newPassword') inputField = 'Nytt lösenord';
@@ -19,10 +18,12 @@ export const validateUser = ({ username, password, email }) => {
 						inputField = 'Bekräfta lösenord';
 
 					return `Lösenordet för "${inputField}" är ogiltigt. Det måste vara minst 6 tecken och innehålla en stor bokstav, en liten bokstav och en siffra.`;
-					console.log('här');
 				}
 			}
 
+			if (password.oldPassword === password.newPassword) {
+				return 'Nya lösenordet får inte vara samma som gamla lösenordet.';
+			}
 			if (password.newPassword !== password.confirmPassword) {
 				return 'Nytt och bekräfta lösenord stämmer inte med varandra';
 			}
@@ -36,7 +37,7 @@ export const validateUser = ({ username, password, email }) => {
 		if (!email || !emailPattern.test(email)) {
 			return 'Email måste vara giltig.';
 		}
-	}
+	} else return 'Du måste ange en emailadress';
 
 	return null;
 };

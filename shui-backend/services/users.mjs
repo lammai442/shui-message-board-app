@@ -4,6 +4,7 @@ import {
 	PutItemCommand,
 	GetItemCommand,
 	UpdateItemCommand,
+	QueryCommand,
 } from '@aws-sdk/client-dynamodb';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
 
@@ -18,10 +19,12 @@ export const registerUser = async (user) => {
 					username: { S: user.username },
 					password: { S: await hashPassword(user.password) },
 					email: { S: user.email },
-					avatar: { S: user.avatarUrl },
+					avatar: { S: user.avatar },
 					gender: { S: user.gender },
 				},
 			},
+			GSI1PK: { S: 'EMAIL' },
+			GSI1SK: { S: `${user.email}` },
 		},
 	});
 
@@ -30,7 +33,7 @@ export const registerUser = async (user) => {
 		return {
 			username: user.username,
 			email: user.email,
-			avatar: user.avatarUrl,
+			avatar: user.avatar,
 			gender: user.gender,
 		};
 	} catch (error) {
@@ -59,6 +62,29 @@ export const getUser = async (username) => {
 	}
 };
 
+export const getUserByEmail = async (email) => {
+	const command = new QueryCommand({
+		TableName: 'shui-table',
+		IndexName: 'GSI1',
+		KeyConditionExpression: 'GSI1PK = :pk AND GSI1SK = :sk',
+		ExpressionAttributeValues: {
+			':pk': { S: 'EMAIL' },
+			':sk': { S: email },
+		},
+	});
+
+	try {
+		const { Items } = await client.send(command);
+		if (!Items || Items.length === 0) return false;
+		console.log('ITEMS IN getuserbyemail : ', Items);
+
+		const user = unmarshall(Items[0]);
+		return user;
+	} catch (error) {
+		console.log('ERROR in getUser in db: ', error.message);
+	}
+};
+
 export const updateUser = async (user) => {
 	const command = new UpdateItemCommand({
 		TableName: 'shui-table',
@@ -67,21 +93,14 @@ export const updateUser = async (user) => {
 			SK: { S: 'PROFILE' },
 		},
 		UpdateExpression:
-			'SET attributes.email = :newEmail, attributes.avatar = :newAvatar',
+			'SET attributes.email = :newEmail, attributes.avatar = :newAvatar, attributes.password = :newPassword, attributes.gender = :newGender',
 		ExpressionAttributeValues: {
 			':newEmail': { S: user.email },
 			':newAvatar': { S: user.avatar },
+			':newPassword': { S: user.password },
+			':newGender': { S: user.gender },
 		},
 		ReturnValues: 'ALL_NEW',
-		// attributes: {
-		// 	M: {
-		// 		username: { S: user.username },
-		// 		password: { S: await hashPassword(user.password) },
-		// 		email: { S: user.email },
-		// 		avatar: { S: user.avatarUrl },
-		// 		gender: { S: user.gender },
-		// 	},
-		// },
 	});
 
 	try {

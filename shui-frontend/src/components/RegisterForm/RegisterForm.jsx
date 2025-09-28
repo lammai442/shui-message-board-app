@@ -58,7 +58,9 @@ function RegisterForm({ setLoginForm }) {
 					navigate('/')
 				);
 			} else {
-				setErrorFormMsg('Användarnamnet är redan upptagen');
+				console.log(response);
+
+				setErrorFormMsg(response.data.message);
 			}
 		}
 	};

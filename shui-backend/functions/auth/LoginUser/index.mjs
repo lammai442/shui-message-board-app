@@ -21,6 +21,7 @@ export const handler = middy(async (event) => {
 				username: response.attributes.username,
 			});
 			return sendResponses(200, {
+				success: true,
 				message: 'User logged in successfully',
 				avatar: response.attributes.avatar,
 				email: response.attributes.email,
