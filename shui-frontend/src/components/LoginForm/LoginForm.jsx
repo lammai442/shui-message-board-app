@@ -79,7 +79,7 @@ function LoginForm({ setLoginForm }) {
 				)}
 			</label>
 			{errorFormMsg && <p className='error_msg'>{errorFormMsg}</p>}
-			<Button className={'form__btn'} type={'submit'}>
+			<Button className={'btn__form'} type={'submit'}>
 				LOGGA IN
 			</Button>
 			<p className='form__text'>

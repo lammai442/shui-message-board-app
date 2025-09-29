@@ -8,6 +8,7 @@ import { generateNb } from '../../utils/generateNb';
 import FormField from '../../components/FormField/FormField';
 import { validateUser } from '../../utils/validateUser';
 import { updateUserApi } from '../../api/auth';
+import Button from '../../components/Button/Button';
 
 function ProfilePage() {
 	const { avatar, username, email, gender } = useAuthStore(
@@ -150,7 +151,7 @@ function ProfilePage() {
 						src={`/avatars/avatar${avatarNb}.png`}
 						alt='Image of avator'
 					/>
-					<div className='form__label-genders'>
+					<section className='form__label-genders'>
 						<label>
 							Man
 							<input
@@ -179,8 +180,8 @@ function ProfilePage() {
 								}}
 							/>
 						</label>
-						<button
-							className='form__gender-btn'
+						<Button
+							className='btn__form-gender'
 							type='button'
 							onClick={() =>
 								setAvatarNb(
@@ -190,17 +191,17 @@ function ProfilePage() {
 								)
 							}>
 							Byt bild
-						</button>
-					</div>
+						</Button>
+					</section>
 					{fields.map((field) => (
 						<FormField field={field} key={field.label} />
 					))}
 					{errorFormMsg && (
 						<p className='error_msg'>{errorFormMsg}</p>
 					)}
-					<button className='form__btn' type='submit'>
-						ÄNDRA
-					</button>
+					<Button className='btn__form' type='submit'>
+						SPARA
+					</Button>
 				</form>
 			</main>
 		</div>

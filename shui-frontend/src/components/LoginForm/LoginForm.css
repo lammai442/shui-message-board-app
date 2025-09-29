@@ -28,11 +28,3 @@
 	top: 50%;
 	font-size: 1.2rem;
 }
-
-.form__btn {
-	padding: 1rem;
-	font-size: var(--font-size-large-btn);
-	border: none;
-	background-color: var(--btn-bg-color);
-	color: var(--white-text-color);
-}

@@ -5,6 +5,7 @@ import { CgProfile } from 'react-icons/cg';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import shuiLogoBlackBold from '../../assets/logo/shui-logo-black-bold.svg';
 import shuiLogoGroupBlack from '../../assets//logo/shui-logo-group-black-bold.svg';
+import Button from '../Button/Button';
 
 function Nav({ openMenu, setOpenMenu }) {
 	const { avatar, username } = useAuthStore((state) => state.user);
@@ -82,10 +83,9 @@ function Nav({ openMenu, setOpenMenu }) {
 						);
 					})}
 				</ul>
-
-				<button className='nav__logut-btn' onClick={() => logout()}>
+				<Button className='nav__logut-btn' onClick={() => logout()}>
 					LOGGA UT
-				</button>
+				</Button>
 			</nav>
 		</>
 	);

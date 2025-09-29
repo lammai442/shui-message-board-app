@@ -101,8 +101,8 @@ function RegisterForm({ setLoginForm }) {
 							}}
 						/>
 					</label>
-					<button
-						className='form__gender-btn'
+					<Button
+						className='btn__form-gender'
 						type='button'
 						onClick={() =>
 							setAvatarNb(
@@ -112,7 +112,7 @@ function RegisterForm({ setLoginForm }) {
 							)
 						}>
 						Byt bild
-					</button>
+					</Button>
 				</div>
 
 				<label className='form__label'>
@@ -157,7 +157,7 @@ function RegisterForm({ setLoginForm }) {
 					/>
 				</label>
 				{errorFormMsg && <p className='error_msg'>{errorFormMsg}</p>}
-				<Button className={'form__btn'} type={'submit'}>
+				<Button className={'btn__form'} type={'submit'}>
 					Registrera
 				</Button>
 				<p className='form__text'>

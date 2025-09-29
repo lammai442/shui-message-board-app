@@ -40,15 +40,6 @@
 	border-radius: 5px;
 }
 
-.form__gender-btn {
-	border: none;
-	padding: 0.5rem;
-	background-color: var(--btn-bg-color);
-	color: var(--white-text-color);
-	font-size: var(--font-size-small-p);
-	border-radius: 5px;
-}
-
 .form__showpassword {
 	position: absolute;
 	right: 5%;
