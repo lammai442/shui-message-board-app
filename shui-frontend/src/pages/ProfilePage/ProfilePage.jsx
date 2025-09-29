@@ -143,67 +143,65 @@ function ProfilePage() {
 	return (
 		<div>
 			<Header title={'ÄNDRA PROFIL'} />
-			<main>
-				<div className='main__wrapper'>
-					<form className='form' onSubmit={handleSubmit}>
-						<img
-							className='form__avatar-img'
-							src={`/avatars/avatar${avatarNb}.png`}
-							alt='Image of avator'
-						/>
-						<div className='form__label-genders'>
-							<label>
-								Man
-								<input
-									className='form__input-gender'
-									type='radio'
-									name='gender'
-									value='man'
-									checked={activeGender === 'man'}
-									onChange={(e) => {
-										setAvatarNb(generateNb(1, 8));
-										setactiveGender('man');
-									}}
-								/>
-							</label>
-							<label>
-								Kvinna
-								<input
-									className='form__input-gender'
-									type='radio'
-									name='gender'
-									value='woman'
-									checked={activeGender === 'woman'}
-									onChange={(e) => {
-										setAvatarNb(generateNb(9, 16));
-										setactiveGender('woman');
-									}}
-								/>
-							</label>
-							<button
-								className='form__gender-btn'
-								type='button'
-								onClick={() =>
-									setAvatarNb(
-										activeGender === 'man'
-											? generateNb(1, 8)
-											: generateNb(9, 16)
-									)
-								}>
-								Byt bild
-							</button>
-						</div>
-						{fields.map((field) => (
-							<FormField field={field} key={field.label} />
-						))}
-						{errorFormMsg && (
-							<p className='error_msg'>{errorFormMsg}</p>
-						)}
-						<button className='form__btn' type='submit'>
-							ÄNDRA
+			<main className='main__wrapper'>
+				<form className='form' onSubmit={handleSubmit}>
+					<img
+						className='form__avatar-img'
+						src={`/avatars/avatar${avatarNb}.png`}
+						alt='Image of avator'
+					/>
+					<div className='form__label-genders'>
+						<label>
+							Man
+							<input
+								className='form__input-gender'
+								type='radio'
+								name='gender'
+								value='man'
+								checked={activeGender === 'man'}
+								onChange={(e) => {
+									setAvatarNb(generateNb(1, 8));
+									setactiveGender('man');
+								}}
+							/>
+						</label>
+						<label>
+							Kvinna
+							<input
+								className='form__input-gender'
+								type='radio'
+								name='gender'
+								value='woman'
+								checked={activeGender === 'woman'}
+								onChange={(e) => {
+									setAvatarNb(generateNb(9, 16));
+									setactiveGender('woman');
+								}}
+							/>
+						</label>
+						<button
+							className='form__gender-btn'
+							type='button'
+							onClick={() =>
+								setAvatarNb(
+									activeGender === 'man'
+										? generateNb(1, 8)
+										: generateNb(9, 16)
+								)
+							}>
+							Byt bild
 						</button>
-					</form>
-				</div>
+					</div>
+					{fields.map((field) => (
+						<FormField field={field} key={field.label} />
+					))}
+					{errorFormMsg && (
+						<p className='error_msg'>{errorFormMsg}</p>
+					)}
+					<button className='form__btn' type='submit'>
+						ÄNDRA
+					</button>
+				</form>
 			</main>
 		</div>
 	);

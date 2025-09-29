@@ -7,7 +7,7 @@ import RegisterForm from '../../components/RegisterForm/RegisterForm';
 function LoginPage() {
 	const [loginForm, setLoginForm] = useState(true);
 	return (
-		<div>
+		<main>
 			<section className='auth__top-hero'>
 				<img
 					src={shuiLogoWhite}
@@ -22,7 +22,7 @@ function LoginPage() {
 					<RegisterForm setLoginForm={setLoginForm} />
 				)}
 			</main>
-		</div>
+		</main>
 	);
 }
 

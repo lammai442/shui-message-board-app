@@ -5,10 +5,10 @@ import { IoEyeSharp } from 'react-icons/io5';
 import { IoIosEyeOff } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { registerApi } from '../../api/auth.js';
-import ShowMsg from '../ShowMsg/ShowMsg.jsx';
 import { generateNb } from '../../utils/generateNb.js';
 import { useMessageStore } from '../../stores/useMessageStore.js';
 import { validateUser } from '../../utils/validateUser.js';
+import Button from '../Button/Button.jsx';
 
 function RegisterForm({ setLoginForm }) {
 	const usernameRef = useRef();
@@ -58,8 +58,6 @@ function RegisterForm({ setLoginForm }) {
 					navigate('/')
 				);
 			} else {
-				console.log(response);
-
 				setErrorFormMsg(response.data.message);
 			}
 		}
@@ -159,9 +157,9 @@ function RegisterForm({ setLoginForm }) {
 					/>
 				</label>
 				{errorFormMsg && <p className='error_msg'>{errorFormMsg}</p>}
-				<button className='form__btn' type='submit'>
+				<Button className={'form__btn'} type={'submit'}>
 					Registrera
-				</button>
+				</Button>
 				<p className='form__text'>
 					Redan medlem?{' '}
 					<span

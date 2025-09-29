@@ -6,16 +6,19 @@ import { IoIosEyeOff } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { loginApi } from '../../api/auth.js';
 import { useMessageStore } from '../../stores/useMessageStore.js';
+import Button from '../Button/Button.jsx';
 function LoginForm({ setLoginForm }) {
 	const usernameRef = useRef();
 	const passwordRef = useRef();
 	const navigate = useNavigate();
 	const [showPsw, setShowPsw] = useState(false);
+	const [errorFormMsg, setErrorFormMsg] = useState(null);
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const updateUserStorage = useAuthStore((state) => state.updateUserStorage);
 
 	const loginUser = async (e) => {
 		e.preventDefault();
+		setErrorFormMsg(null);
 		const response = await loginApi({
 			username: usernameRef.current.value,
 			password: passwordRef.current.value,
@@ -35,9 +38,9 @@ function LoginForm({ setLoginForm }) {
 				navigate('/')
 			);
 		} else if (response.data.message === 'Wrong password')
-			showMsg('Fel lösenord', false);
+			setErrorFormMsg('Fel lösenord');
 		else {
-			showMsg('Användarnamnet finns inte i databasen', false);
+			setErrorFormMsg('Användarnamnet finns inte i databasen');
 		}
 	};
 
@@ -75,9 +78,10 @@ function LoginForm({ setLoginForm }) {
 					/>
 				)}
 			</label>
-			<button className='form__btn' type='submit'>
-				LOGIN
-			</button>
+			{errorFormMsg && <p className='error_msg'>{errorFormMsg}</p>}
+			<Button className={'form__btn'} type={'submit'}>
+				LOGGA IN
+			</Button>
 			<p className='form__text'>
 				Inget konto?{' '}
 				<span

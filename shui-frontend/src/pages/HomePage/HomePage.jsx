@@ -5,6 +5,7 @@ function HomePage() {
 	return (
 		<div>
 			<Header title={'HEM'} />
+			<main></main>
 		</div>
 	);
 }

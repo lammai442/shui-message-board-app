@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import shuiLogoBlackBold from '../../assets/logo/shui-logo-black-bold.svg';
+import shuiLogoGroupBlack from '../../assets//logo/shui-logo-group-black-bold.svg';
 
 function Nav({ openMenu, setOpenMenu }) {
 	const { avatar, username } = useAuthStore((state) => state.user);
@@ -12,10 +13,10 @@ function Nav({ openMenu, setOpenMenu }) {
 
 	const navItems = [
 		{
-			title: 'Profilsidan',
-			subtitle: 'Se och ändra din profil',
-			Icon: CgProfile,
-			route: '/profile',
+			title: 'Shuiflödet',
+			subtitle: 'Se alla meddelanden',
+			customIcon: shuiLogoGroupBlack,
+			route: '/',
 		},
 		{
 			title: 'Meddelanden',
@@ -23,6 +24,12 @@ function Nav({ openMenu, setOpenMenu }) {
 			// Icon: CgProfile,
 			customIcon: shuiLogoBlackBold,
 			route: '/messages',
+		},
+		{
+			title: 'Profilsidan',
+			subtitle: 'Se och ändra din profil',
+			Icon: CgProfile,
+			route: '/profile',
 		},
 	];
 
