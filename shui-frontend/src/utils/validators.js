@@ -1,7 +1,10 @@
+export const validateMessage = () => {};
+
 export const validateUser = ({ username, password, email }) => {
 	if (username) {
-		if (!username || username.length < 5 || username.length > 10) {
-			return 'Användarnamn måste vara mellan 5 och 10 tecken lång.';
+		const userPattern = /^[A-Za-z0-9]{5,}$/;
+		if (!username || username.length < 5 || !userPattern.test(username)) {
+			return 'Användarnamn måste vara minst 5 tecken och bara bokstäver och siffror.';
 		}
 	}
 

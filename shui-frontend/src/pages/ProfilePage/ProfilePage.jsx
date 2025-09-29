@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMessageStore } from '../../stores/useMessageStore';
 import { generateNb } from '../../utils/generateNb';
 import FormField from '../../components/FormField/FormField';
-import { validateUser } from '../../utils/validateUser';
+import { validateUser } from '../../utils/validators';
 import { updateUserApi } from '../../api/auth';
 import Button from '../../components/Button/Button';
 

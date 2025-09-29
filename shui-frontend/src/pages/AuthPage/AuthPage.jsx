@@ -14,6 +14,12 @@ function LoginPage() {
 					alt='Image of logo'
 					className='auth__hero-logo'
 				/>
+				<section className='auth__text'>
+					<h1 className='auth__title'>Gör dina tankar synliga</h1>
+					<h2 className='auth__subtitle'>
+						Dela vad du tycker, följ vad andra tänker
+					</h2>
+				</section>
 			</section>
 			<main className='auth__main-wrapper'>
 				{loginForm ? (

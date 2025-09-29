@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { registerApi } from '../../api/auth.js';
 import { generateNb } from '../../utils/generateNb.js';
 import { useMessageStore } from '../../stores/useMessageStore.js';
-import { validateUser } from '../../utils/validateUser.js';
+import { validateUser } from '../../utils/validators.js';
 import Button from '../Button/Button.jsx';
 
 function RegisterForm({ setLoginForm }) {

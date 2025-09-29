@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ShowMsg from './components/ShowMsg/ShowMsg';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import MessagePage from './pages/MessagePage/MessagePage';
+import ShuiMessagePage from './pages/ShuiMessagePage/ShuiMessagePage';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/profile' element={<ProfilePage />} />
 					<Route path='/messages' element={<MessagePage />} />
+					<Route path='/shuimessage' element={<ShuiMessagePage />} />
 				</Route>
 			</Routes>
 			<ShowMsg />

@@ -22,7 +22,7 @@ export const handler = middy(async (event) => {
 		const message =
 			existingUser?.attributes?.username === event.body.username
 				? `Användarnamnet ${event.body.username} är redan upptaget`
-				: `Emailen ${event.body.email} är redan upptagen`;
+				: `${event.body.email} är redan upptagen`;
 
 		return sendResponses(404, { message });
 	}

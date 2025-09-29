@@ -5,6 +5,7 @@ import { CgProfile } from 'react-icons/cg';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import shuiLogoBlackBold from '../../assets/logo/shui-logo-black-bold.svg';
 import shuiLogoGroupBlack from '../../assets//logo/shui-logo-group-black-bold.svg';
+import shuiLogoBlackWrite from '../../assets//logo/shui-logo-black-write.svg';
 import Button from '../Button/Button';
 
 function Nav({ openMenu, setOpenMenu }) {
@@ -20,9 +21,14 @@ function Nav({ openMenu, setOpenMenu }) {
 			route: '/',
 		},
 		{
-			title: 'Meddelanden',
-			subtitle: 'Överblick över dina meddelanden',
-			// Icon: CgProfile,
+			title: 'Nytt Shui',
+			subtitle: 'Sprid en ny tanke',
+			customIcon: shuiLogoBlackWrite,
+			route: '/shuimessage',
+		},
+		{
+			title: 'Dina Shui',
+			subtitle: 'Överblick över dina tankar',
 			customIcon: shuiLogoBlackBold,
 			route: '/messages',
 		},
