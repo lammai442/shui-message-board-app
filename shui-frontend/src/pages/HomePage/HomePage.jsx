@@ -7,11 +7,29 @@ import { useState, useEffect } from 'react';
 import { getMessages } from '../../api/message';
 import ShuiMessages from '../../components/ShuiMessages/ShuiMessages';
 import Loading from '../../components/Loading/Loading';
+import { useAuthStore } from '../../stores/useAuthStore';
 function HomePage() {
 	const [messages, setMessages] = useState([]);
+	const [targetCategory, setTargetCategory] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const user = useAuthStore((state) => state.user);
 
+	const categories = [
+		{
+			category: 'Tankar',
+		},
+		{
+			category: 'Humor',
+		},
+		{
+			category: 'Idéer',
+		},
+		{
+			category: 'Frågor',
+		},
+	];
+	// Laddar meddelanden
 	useEffect(() => {
 		setLoading(true);
 		const fetchMessages = async () => {
@@ -25,8 +43,6 @@ function HomePage() {
 		};
 		fetchMessages();
 	}, []);
-
-	console.log(messages);
 
 	return (
 		<div>
@@ -47,7 +63,7 @@ function HomePage() {
 									category={message.Category}></ShuiMessage>
 							);
 						})} */}
-					<ShuiMessages messages={messages} />
+					<ShuiMessages messages={messages} user={user} />
 				</section>
 			</main>
 			<Button

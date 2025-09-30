@@ -35,3 +35,29 @@
 	width: 30px;
 	height: 30px;
 }
+
+.shui-msg__edit-btn {
+	background-color: var(--btn-bg-color);
+	padding: 0.3rem;
+	width: 20%;
+	border-radius: 5px;
+	color: var(--white-text-color);
+}
+
+.shui-msg__category-btn {
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding: 0.2rem 0.5rem;
+	font-size: var(--font-size-small-p);
+	cursor: pointer;
+}
+
+.shui-msg__username-btn {
+	background: none;
+	color: var(--black-text-color);
+	font-size: var(--font-size-small-btn);
+	font-weight: bold;
+	cursor: pointer;
+	padding: 0;
+	display: inline;
+}
