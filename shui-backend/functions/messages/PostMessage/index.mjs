@@ -29,7 +29,7 @@ export const handler = middy(async (event) => {
 	if (user) {
 		const response = await newMessage(event.body);
 		if (response) {
-			return sendResponses(200, {
+			return sendResponses(201, {
 				success: true,
 				message: 'Successfully added message',
 			});

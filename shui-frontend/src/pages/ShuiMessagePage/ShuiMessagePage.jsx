@@ -7,6 +7,8 @@ import Select from 'react-select';
 import { useState } from 'react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { postMessage } from '../../api/message';
+import { useMessageStore } from '../../stores/useMessageStore';
+import Loading from '../../components/Loading/Loading';
 
 const categories = [
 	{ value: 'thoughts', label: 'Tankar' },
@@ -17,7 +19,11 @@ const categories = [
 
 function ShuiMessagePage() {
 	const [selectedCategory, setSelectedCategory] = useState(null);
+	const [title, setTitle] = useState('');
+	const [message, setMessage] = useState('');
 	const [errorFormMsg, setErrorFormMsg] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const showMsg = useMessageStore((state) => state.showMsg);
 	const titleRef = useRef();
 	const messageRef = useRef();
 	const user = useAuthStore((state) => state.user);
@@ -37,17 +43,21 @@ function ShuiMessagePage() {
 		if (validMessage !== null) {
 			setErrorFormMsg(validMessage);
 		} else {
-			const response = await postMessage({
-				username: user.username,
-				token: user.token,
-				category: selectedCategory,
-				title: titleRef.current.value,
-				message: messageRef.current.value,
-			});
-
+			setLoading(true);
+			const response = await postMessage(
+				{
+					username: user.username,
+					avatar: user.avatar,
+					category: selectedCategory.value,
+					title: title,
+					message: message,
+				},
+				user.token
+			);
+			setLoading(false);
 			console.log(response);
 
-			if (response.status !== 200) {
+			if (response.status !== 201) {
 				return setErrorFormMsg(response.data.message);
 			}
 
@@ -58,6 +68,12 @@ function ShuiMessagePage() {
 					() => navigate('/auth')
 				);
 			}
+
+			if (response.status === 201) {
+				setTitle('');
+				setMessage('');
+				return showMsg('Ditt meddelande är publicerad', true);
+			}
 		}
 	};
 
@@ -65,6 +81,7 @@ function ShuiMessagePage() {
 		<div>
 			<Header title={'NYTT SHUI'} />
 			<main>
+				{loading && <Loading />}
 				<form className='form__shui-msg' onSubmit={handleSubmit}>
 					<label className='form__label'>
 						Kategori
@@ -88,6 +105,8 @@ function ShuiMessagePage() {
 							type='text'
 							className='form__inputs'
 							ref={titleRef}
+							value={title}
+							onChange={(e) => setTitle(e.target.value)}
 						/>
 					</label>
 
@@ -95,9 +114,11 @@ function ShuiMessagePage() {
 						Skriv din tanke här
 						<textarea
 							type='text'
+							value={message}
+							onChange={(e) => setMessage(e.target.value)}
 							ref={messageRef}
 							rows='5'
-							className='form__inputs'></textarea>{' '}
+							className='form__inputs'></textarea>
 					</label>
 					{errorFormMsg && (
 						<p className='error_msg'>{errorFormMsg}</p>

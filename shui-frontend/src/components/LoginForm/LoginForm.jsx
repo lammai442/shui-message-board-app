@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginApi } from '../../api/auth.js';
 import { useMessageStore } from '../../stores/useMessageStore.js';
 import Button from '../Button/Button.jsx';
-function LoginForm({ setLoginForm }) {
+function LoginForm({ setLoginForm, setLoading }) {
 	const usernameRef = useRef();
 	const passwordRef = useRef();
 	const navigate = useNavigate();
@@ -16,13 +16,16 @@ function LoginForm({ setLoginForm }) {
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const updateUserStorage = useAuthStore((state) => state.updateUserStorage);
 
-	const loginUser = async (e) => {
+	const handleLogin = async (e) => {
 		e.preventDefault();
 		setErrorFormMsg(null);
+		setLoading(true);
 		const response = await loginApi({
 			username: usernameRef.current.value,
 			password: passwordRef.current.value,
 		});
+
+		setLoading(false);
 
 		if (response.status === 200) {
 			// Om det lyckas att logga in så läggs usern in i AuthStore
@@ -46,7 +49,7 @@ function LoginForm({ setLoginForm }) {
 	};
 
 	return (
-		<form className='form' onSubmit={loginUser}>
+		<form className='form' onSubmit={handleLogin}>
 			<h1 className='form__title'>Login</h1>
 			<label className='form__label'>
 				Användernamn:

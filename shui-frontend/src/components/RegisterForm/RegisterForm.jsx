@@ -10,7 +10,7 @@ import { useMessageStore } from '../../stores/useMessageStore.js';
 import { validateUser } from '../../utils/validators.js';
 import Button from '../Button/Button.jsx';
 
-function RegisterForm({ setLoginForm }) {
+function RegisterForm({ setLoginForm, setLoading }) {
 	const usernameRef = useRef();
 	const passwordRef = useRef();
 	const emailRef = useRef();
@@ -36,6 +36,7 @@ function RegisterForm({ setLoginForm }) {
 			setErrorFormMsg(validateUserForm);
 		} else {
 			setErrorFormMsg(null);
+			setLoading(true);
 			const response = await registerApi({
 				username: usernameRef.current.value,
 				password: passwordRef.current.value,
@@ -44,6 +45,7 @@ function RegisterForm({ setLoginForm }) {
 				gender: gender,
 				role: 'user',
 			});
+			setLoading(false);
 			console.log(response);
 
 			if (response.status === 201) {
@@ -69,7 +71,7 @@ function RegisterForm({ setLoginForm }) {
 	return (
 		<>
 			<form className='form' onSubmit={registerUser}>
-				<h1 className='form__title'>Register</h1>
+				<h1 className='form__title'>Registrera</h1>
 				<img
 					className='form__avatar-img'
 					src={`/avatars/avatar${avatarNb}.png`}

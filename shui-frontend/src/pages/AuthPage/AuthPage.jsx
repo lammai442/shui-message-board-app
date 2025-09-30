@@ -3,11 +3,20 @@ import shuiLogoWhite from '../../assets/logo/shui-logo-white.svg';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { useState } from 'react';
 import RegisterForm from '../../components/RegisterForm/RegisterForm';
+import Loading from '../../components/Loading/Loading';
 
 function LoginPage() {
 	const [loginForm, setLoginForm] = useState(true);
+	const [loading, setLoading] = useState(false);
 	return (
 		<main>
+			{loading && (
+				<Loading
+					text={
+						loginForm ? 'Hämtar användare' : 'Registrerar användare'
+					}
+				/>
+			)}
 			<section className='auth__top-hero'>
 				<img
 					src={shuiLogoWhite}
@@ -23,9 +32,15 @@ function LoginPage() {
 			</section>
 			<main className='auth__main-wrapper'>
 				{loginForm ? (
-					<LoginForm setLoginForm={setLoginForm} />
+					<LoginForm
+						setLoginForm={setLoginForm}
+						setLoading={setLoading}
+					/>
 				) : (
-					<RegisterForm setLoginForm={setLoginForm} />
+					<RegisterForm
+						setLoginForm={setLoginForm}
+						setLoading={setLoading}
+					/>
 				)}
 			</main>
 		</main>

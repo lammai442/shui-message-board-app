@@ -1,5 +1,6 @@
 export const validateMessage = (title, message) => {
 	if (!title) return 'Du måste fylla i en rubrik';
+	if (title.length > 22) return 'Det får vara max 21 tecken i rubriken';
 	if (!message) return 'Du måste fylla i ett meddelande';
 	return null;
 };

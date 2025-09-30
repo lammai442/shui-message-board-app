@@ -1,13 +1,35 @@
 import { client } from './client.mjs';
-import { PutItemCommand } from '@aws-sdk/client-dynamodb';
+import { PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
 import { generateId } from '../utils/uuid.mjs';
+import { unmarshall } from '@aws-sdk/util-dynamodb';
 
+export const getMessages = async () => {
+	const command = new QueryCommand({
+		TableName: 'shui-table',
+		IndexName: 'GSI1',
+		KeyConditionExpression: 'GSI1PK = :gsi1pk',
+		ExpressionAttributeValues: {
+			':gsi1pk': { S: 'MESSAGE' },
+		},
+		// Gör så att senaste kommer högst upp
+		ScanIndexForward: false,
+	});
+
+	try {
+		const response = await client.send(command);
+		return response.Items.map((item) => unmarshall(item));
+	} catch (error) {
+		console.log('ERROR in getMessages in client: ', error.message);
+		return [];
+	}
+};
 export const newMessage = async (messageData) => {
 	const command = new PutItemCommand({
 		TableName: 'shui-table',
 		Item: {
 			PK: { S: `USER#${messageData.username}` },
 			SK: { S: `MESSAGE#${generateId(5)}` },
+			Avatar: { S: messageData.avatar },
 			CreatedAt: { S: new Date().toISOString() },
 			Title: { S: messageData.title },
 			Message: { S: messageData.message },

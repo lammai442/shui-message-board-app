@@ -9,20 +9,22 @@ import FormField from '../../components/FormField/FormField';
 import { validateUser } from '../../utils/validators';
 import { updateUserApi } from '../../api/auth';
 import Button from '../../components/Button/Button';
+import Loading from '../../components/Loading/Loading';
 
 function ProfilePage() {
 	const { avatar, username, email, gender } = useAuthStore(
 		(state) => state.user
 	);
+	const [avatarNb, setAvatarNb] = useState(avatar.slice(15));
+	const [activeGender, setactiveGender] = useState(gender);
+	const [errorFormMsg, setErrorFormMsg] = useState(null);
+	const [loading, setLoading] = useState(false);
 	const usernameRef = useRef();
 	const oldPasswordRef = useRef();
 	const newPasswordRef = useRef();
 	const confirmPasswordRef = useRef();
 	const emailRef = useRef();
 	const navigate = useNavigate();
-	const [avatarNb, setAvatarNb] = useState(avatar.slice(15));
-	const [activeGender, setactiveGender] = useState(gender);
-	const [errorFormMsg, setErrorFormMsg] = useState(null);
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const updateUserStorage = useAuthStore((state) => state.updateUserStorage);
 	const user = useAuthStore((state) => state.user);
@@ -105,6 +107,7 @@ function ProfilePage() {
 					newPassword: newPasswordRef.current.value,
 				};
 
+			setLoading(true);
 			const response = await updateUserApi({
 				username: usernameRef.current.value,
 				password: password,
@@ -114,6 +117,7 @@ function ProfilePage() {
 				role: user.role,
 			});
 
+			setLoading(false);
 			if (response.status !== 200) {
 				return setErrorFormMsg(response.data.message);
 			}
@@ -146,6 +150,7 @@ function ProfilePage() {
 		<div>
 			<Header title={'ÄNDRA PROFIL'} />
 			<main className='main__wrapper'>
+				{loading && <Loading text={'Sparar ändringar'} />}
 				<form className='form' onSubmit={handleSubmit}>
 					<img
 						className='form__avatar-img'

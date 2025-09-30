@@ -32,6 +32,12 @@ functions:
           path: /api/auth/user
           method: PATCH
   # Messages
+  GetMessages:
+    handler: functions/messages/GetMessages/index.handler
+    events:
+      - httpApi:
+          path: /api/messages
+          method: GET
   PostMessage:
     handler: functions/messages/PostMessage/index.handler
     events:

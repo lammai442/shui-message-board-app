@@ -22,6 +22,12 @@
 
 	--btn-bg-color: #5eb0e0;
 
+	/* Categorycolors */
+	--category-thoughts: #a7c7e7;
+	--category-ideas: #ffd580;
+	--category-questions: #b2e672;
+	--category-humor: #f7a6b5;
+
 	/* Text color */
 	--white-text-color: #ffffff;
 	--black-text-color: #000;
