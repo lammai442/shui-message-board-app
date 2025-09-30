@@ -31,6 +31,13 @@ functions:
       - httpApi:
           path: /api/auth/user
           method: PATCH
+  # Messages
+  PostMessage:
+    handler: functions/messages/PostMessage/index.handler
+    events:
+      - httpApi:
+          path: /api/messages
+          method: POST
 
 resources:
   Resources:
@@ -48,6 +55,10 @@ resources:
             AttributeType: S
           - AttributeName: GSI1SK
             AttributeType: S
+          - AttributeName: GSI2PK
+            AttributeType: S
+          - AttributeName: GSI2SK
+            AttributeType: S
         KeySchema:
           - AttributeName: PK
             KeyType: HASH
@@ -59,6 +70,14 @@ resources:
               - AttributeName: GSI1PK
                 KeyType: HASH
               - AttributeName: GSI1SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: GSI2
+            KeySchema:
+              - AttributeName: GSI2PK
+                KeyType: HASH
+              - AttributeName: GSI2SK
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL

@@ -32,6 +32,7 @@ function LoginForm({ setLoginForm }) {
 				avatar: response.data.avatar,
 				email: response.data.email,
 				gender: response.data.gender,
+				role: response.data.role,
 			});
 
 			showMsg('Inloggning lyckades! Lets Shui!', true, () =>

@@ -61,6 +61,7 @@ export const handler = middy(async (event) => {
 				email: updatedUser.email,
 				username: updatedUser.username,
 				gender: updatedUser.gender,
+				role: updatedUser.role,
 			});
 		} else {
 			return sendResponses(400, { message: 'Fel lösenord' });

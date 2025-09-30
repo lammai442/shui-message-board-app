@@ -50,3 +50,15 @@ li {
 .main__wrapper {
 	padding: 1rem;
 }
+
+input,
+textarea {
+	border-radius: 5px;
+	border: 1px solid var(--black-bg-color);
+}
+
+input:focus,
+textarea:focus {
+	border: 2px solid var(--main-bg-color);
+	outline: none;
+}

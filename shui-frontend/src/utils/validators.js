@@ -1,4 +1,8 @@
-export const validateMessage = () => {};
+export const validateMessage = (title, message) => {
+	if (!title) return 'Du måste fylla i en rubrik';
+	if (!message) return 'Du måste fylla i ett meddelande';
+	return null;
+};
 
 export const validateUser = ({ username, password, email }) => {
 	if (username) {

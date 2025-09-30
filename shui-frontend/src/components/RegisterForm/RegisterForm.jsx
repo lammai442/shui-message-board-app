@@ -42,7 +42,9 @@ function RegisterForm({ setLoginForm }) {
 				email: emailRef.current.value,
 				avatar: `/avatars/avatar${avatarNb}`,
 				gender: gender,
+				role: 'user',
 			});
+			console.log(response);
 
 			if (response.status === 201) {
 				// Om det lyckas att registreras så läggs usern in i AuthStore
@@ -52,6 +54,7 @@ function RegisterForm({ setLoginForm }) {
 					avatar: response.data.avatar,
 					email: response.data.email,
 					gender: response.data.gender,
+					role: response.data.role,
 				});
 
 				showMsg(`Registreringen lyckades! Lets Shui`, true, () =>

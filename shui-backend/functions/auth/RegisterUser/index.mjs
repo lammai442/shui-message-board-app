@@ -40,6 +40,7 @@ export const handler = middy(async (event) => {
 			username: response.username,
 			token: `Bearer ${token}`,
 			gender: response.gender,
+			role: response.role,
 		});
 	} else {
 		return sendResponses(404, {

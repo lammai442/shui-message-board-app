@@ -21,8 +21,10 @@ export const registerUser = async (user) => {
 					email: { S: user.email },
 					avatar: { S: user.avatar },
 					gender: { S: user.gender },
+					role: { S: user.role },
 				},
 			},
+			CreatedAt: { S: new Date().toISOString() },
 			GSI1PK: { S: 'EMAIL' },
 			GSI1SK: { S: `${user.email}` },
 		},
@@ -35,6 +37,7 @@ export const registerUser = async (user) => {
 			email: user.email,
 			avatar: user.avatar,
 			gender: user.gender,
+			role: user.role,
 		};
 	} catch (error) {
 		console.log('ERROR in registerUser in client: ', error.message);
@@ -93,12 +96,13 @@ export const updateUser = async (user) => {
 			SK: { S: 'PROFILE' },
 		},
 		UpdateExpression:
-			'SET attributes.email = :newEmail, attributes.avatar = :newAvatar, attributes.password = :newPassword, attributes.gender = :newGender',
+			'SET attributes.email = :newEmail, attributes.avatar = :newAvatar, attributes.password = :newPassword, attributes.gender = :newGender, modifiedAT = :newModifiedAt',
 		ExpressionAttributeValues: {
 			':newEmail': { S: user.email },
 			':newAvatar': { S: user.avatar },
 			':newPassword': { S: user.password },
 			':newGender': { S: user.gender },
+			':newModifiedAt': { S: new Date().toISOString() },
 		},
 		ReturnValues: 'ALL_NEW',
 	});

@@ -111,8 +111,8 @@ function ProfilePage() {
 				email: emailRef.current.value,
 				avatar: `/avatars/avatar${avatarNb}`,
 				gender: activeGender,
+				role: user.role,
 			});
-			console.log(response);
 
 			if (response.status !== 200) {
 				return setErrorFormMsg(response.data.message);
@@ -132,6 +132,7 @@ function ProfilePage() {
 					avatar: response.data.avatar,
 					email: response.data.email,
 					gender: response.data.gender,
+					role: response.data.role,
 				});
 				oldPasswordRef.current.value = '';
 				newPasswordRef.current.value = '';
