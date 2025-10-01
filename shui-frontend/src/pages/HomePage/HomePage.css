@@ -1,3 +1,9 @@
+.messages__wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
 .categories__box {
 	display: flex;
 	flex-direction: column;
@@ -11,4 +17,9 @@
 	gap: 0.5rem;
 	width: 100%;
 	border-radius: 10px;
+}
+
+.categories__btn-box--small {
+	gap: 0.4rem;
+	flex-direction: row;
 }

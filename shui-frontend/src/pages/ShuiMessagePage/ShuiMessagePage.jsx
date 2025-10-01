@@ -9,20 +9,15 @@ import { useAuthStore } from '../../stores/useAuthStore';
 import { postMessage } from '../../api/message';
 import { useMessageStore } from '../../stores/useMessageStore';
 import Loading from '../../components/Loading/Loading';
-
-const categories = [
-	{ value: 'thoughts', label: 'Tankar' },
-	{ value: 'ideas', label: 'Idéer' },
-	{ value: 'questions', label: 'Frågor' },
-	{ value: 'humor', label: 'Humor' },
-];
-
+import { categoriesValues } from '../../data/data.js';
+import { useNavigate } from 'react-router-dom';
 function ShuiMessagePage() {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [title, setTitle] = useState('');
 	const [message, setMessage] = useState('');
 	const [errorFormMsg, setErrorFormMsg] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const titleRef = useRef();
 	const messageRef = useRef();
@@ -55,11 +50,8 @@ function ShuiMessagePage() {
 				user.token
 			);
 			setLoading(false);
-			console.log(response);
 
-			if (response.status !== 201) {
-				return setErrorFormMsg(response.data.message);
-			}
+			console.log(response);
 
 			if (response.data.message === 'Token is invalid') {
 				return showMsg(
@@ -67,6 +59,9 @@ function ShuiMessagePage() {
 					false,
 					() => navigate('/auth')
 				);
+			}
+			if (response.status !== 201) {
+				return setErrorFormMsg(response.data.message);
 			}
 
 			if (response.status === 201) {
@@ -80,13 +75,13 @@ function ShuiMessagePage() {
 	return (
 		<div>
 			<Header title={'NYTT SHUI'} />
-			<main>
+			<main className='main__wrapper'>
 				{loading && <Loading text={'Publicerar...'} />}
 				<form className='form__shui-msg' onSubmit={handleSubmit}>
 					<label className='form__label'>
 						Kategori
 						<Select
-							options={categories}
+							options={categoriesValues}
 							value={selectedCategory}
 							onChange={setSelectedCategory}
 							placeholder='Välj kategori...'

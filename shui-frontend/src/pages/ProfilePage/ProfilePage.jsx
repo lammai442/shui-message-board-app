@@ -118,9 +118,6 @@ function ProfilePage() {
 			});
 
 			setLoading(false);
-			if (response.status !== 200) {
-				return setErrorFormMsg(response.data.message);
-			}
 
 			if (response.data.message === 'Token is invalid') {
 				return showMsg(
@@ -129,6 +126,11 @@ function ProfilePage() {
 					() => navigate('/auth')
 				);
 			}
+
+			if (response.status !== 200) {
+				return setErrorFormMsg(response.data.message);
+			}
+
 			if (response.status === 200) {
 				updateUserStorage({
 					username: response.data.username,

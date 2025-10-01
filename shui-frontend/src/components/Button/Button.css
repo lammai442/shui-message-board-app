@@ -76,13 +76,14 @@
 	padding: 2rem;
 	font-size: var(--font-size-large-btn);
 	font-weight: 600;
+	background-color: var(--white-bg-color);
 }
 
-.thoughts-btn {
+.tankar-btn {
 	background-color: var(--category-thoughts);
 }
 
-.ideas-btn {
+.ideer-btn {
 	background-color: var(--category-ideas);
 }
 
@@ -90,9 +91,18 @@
 	background-color: var(--category-humor);
 }
 
-.questions-btn {
+.frågor-btn {
 	background-color: var(--category-questions);
 }
 .all-btn {
 	background-color: var(--main-bg-color);
+}
+.categories__btn--small {
+	padding: 0.4rem;
+	border: 1px solid var(--black-bg-color);
+	font-size: var(--font-size-small-p);
+}
+
+.categories__btn--small > img {
+	display: none;
 }

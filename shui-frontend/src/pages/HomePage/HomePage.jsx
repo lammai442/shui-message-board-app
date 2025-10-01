@@ -8,6 +8,8 @@ import { getMessages, getMessagesByCategories } from '../../api/message';
 import ShuiMessages from '../../components/ShuiMessages/ShuiMessages';
 import Loading from '../../components/Loading/Loading';
 import { useAuthStore } from '../../stores/useAuthStore';
+import { categories } from '../../data/data.js';
+
 function HomePage() {
 	const [messages, setMessages] = useState([]);
 	const [selectedCategory, setSelectCategory] = useState(null);
@@ -15,38 +17,8 @@ function HomePage() {
 	const navigate = useNavigate();
 	const user = useAuthStore((state) => state.user);
 
-	const categories = [
-		{
-			category: 'all',
-			title: 'ALLA',
-			className: 'category-btn all-btn',
-		},
-		{
-			category: 'thoughts',
-			title: 'TANKAR',
-			className: 'category-btn thoughts-btn',
-		},
-		{
-			category: 'humor',
-			title: 'HUMOR',
-			className: 'category-btn humor-btn',
-		},
-		{
-			category: 'ideas',
-			title: 'IDÉER',
-			className: 'category-btn ideas-btn',
-		},
-		{
-			category: 'questions',
-			title: 'FRÅGOR',
-			className: 'category-btn questions-btn',
-		},
-	];
-
 	// Laddar meddelanden
 	useEffect(() => {
-		console.log(selectedCategory);
-
 		// Hoppar över om inget värde finns
 		if (!selectedCategory) return;
 		setLoading(true);
@@ -57,17 +29,12 @@ function HomePage() {
 					const messageData = await getMessages();
 					setMessages(messageData.data.data);
 					setLoading(false);
-
-					console.log(messageData);
 				} catch (error) {
 					console.error('Kunde inte hämta meddelanden', error);
 				}
 			};
 			fetchAllMessages();
 		} else {
-			console.log('här');
-			console.log(selectedCategory);
-
 			const fetchCategoryMessages = async (selectedCategory) => {
 				try {
 					console.log(selectedCategory);
@@ -75,8 +42,6 @@ function HomePage() {
 					const messageData = await getMessagesByCategories(
 						selectedCategory
 					);
-					console.log(messageData);
-
 					setMessages(messageData.data.data);
 					setLoading(false);
 				} catch (error) {
@@ -100,22 +65,38 @@ function HomePage() {
 						<h2 className='categories_title'>
 							Välj en kategori och hitta nya tankar
 						</h2>
-						<section className='categories__btn-box'>
+						<section
+							className={`categories__btn-box ${
+								selectedCategory && selectedCategory.length > 0
+									? 'categories__btn-box--small'
+									: ''
+							}`}>
 							{categories.map((c) => (
 								<Button
 									key={c.title}
-									className={c.className}
-									onClick={() =>
-										setSelectCategory(c.category)
-									}>
+									iconLeft={c.iconLeft}
+									iconLeftClassName={c.category}
+									className={`${c.className}${
+										selectedCategory &&
+										selectedCategory.length > 0
+											? ' categories__btn--small'
+											: ''
+									}`}
+									onClick={() => {
+										setSelectCategory(c.category);
+									}}>
 									{c.title}
 								</Button>
 							))}
 						</section>
 					</section>
-
+					{/* Renderar ut meddelanden utifrån vald kategori */}
 					{selectedCategory && (
-						<ShuiMessages messages={messages} user={user} />
+						<ShuiMessages
+							messages={messages}
+							user={user}
+							loading={loading}
+						/>
 					)}
 				</section>
 			</main>

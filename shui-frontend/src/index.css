@@ -5,6 +5,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Inter', sans-serif;
+	/* outline: 1px solid red; */
 }
 
 :root {
@@ -19,6 +20,7 @@
 	--main-bg-color-gradient-end: #1e5f8a; /* mörkare blå för gradient */
 	--white-bg-color: #ffffff;
 	--black-bg-color: #000;
+	--grey-bg-color: #f4f5f7;
 
 	/* Btn colors */
 	--btn-bg-color: #5eb0e0;
@@ -58,6 +60,10 @@ li {
 
 .main__wrapper {
 	padding: 1rem;
+}
+
+body {
+	background-color: var(--grey-bg-color);
 }
 
 input,

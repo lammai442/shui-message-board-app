@@ -6,20 +6,20 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import { deleteMessage } from '../../api/message';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useMessageStore } from '../../stores/useMessageStore';
+import { FaRegFaceGrinStars } from 'react-icons/fa6';
 
-function ShuiMessages({ messages, user }) {
+function ShuiMessages({ messages, user, loading }) {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [currentMessages, setCurrentMessages] = useState(messages);
 	const [deleteMsgPopup, setDeleteMsgPopup] = useState(false);
 	const [deleteMsg, setDeleteMsg] = useState(null);
 	const showMsg = useMessageStore((state) => state.showMsg);
-	const [loading, setLoading] = useState(null);
 	const token = useAuthStore((state) => state.user.token);
 
 	useEffect(() => {
 		if (messages && messages.length > 0) {
 			setCurrentMessages(messages);
-		}
+		} else setCurrentMessages([]);
 	}, [messages]);
 
 	useEffect(() => {
@@ -80,9 +80,20 @@ function ShuiMessages({ messages, user }) {
 				</div>
 			)}
 			<section className='shui-msg__wrapper'>
+				{!loading && currentMessages.length === 0 && (
+					<section className='shui-msg__empty-box'>
+						<p className='shui-msg__empty-text'>
+							{`Här var det tomt! \n Men du kan bli först att shuia`}
+						</p>
+						<p className='shui-msg__empty-text'></p>
+						<FaRegFaceGrinStars className='shui-msg__empty-icon' />
+					</section>
+				)}
 				{currentMessages.map((message) => {
 					// Kontroll om inloggad user är samma som den som skrev meddelandet
 					const isOwnMessage = user.username === message.PK.slice(5);
+					if (message.Category === 'thoughts')
+						message.Category = 'tankar';
 
 					return (
 						<section
@@ -112,7 +123,7 @@ function ShuiMessages({ messages, user }) {
 										)}`}
 									</span>
 									<Button
-										className={'shui-msg__category-btn'}
+										className={`shui-msg__category-btn ${message.Category}-btn`}
 										onClick={() =>
 											setSelectedCategory({
 												value: message.Category,

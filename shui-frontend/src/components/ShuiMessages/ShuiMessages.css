@@ -2,8 +2,8 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-	height: 700px;
-	overflow-y: auto;
+	/* height: 700px; */
+	/* overflow-y: auto; */
 }
 
 .shui-msg__box {
@@ -13,22 +13,8 @@
 	width: 100%;
 	border-radius: 10px;
 	gap: 0.5rem;
-}
-
-.thoughts {
-	background-color: var(--category-thoughts);
-}
-
-.ideas {
-	background-color: var(--category-ideas);
-}
-
-.humor {
-	background-color: var(--category-humor);
-}
-
-.questions {
-	background-color: var(--category-questions);
+	background-color: var(--white-bg-color);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 .shui-msg__top-box {
@@ -91,4 +77,26 @@
 
 .popup__no-btn {
 	background-color: var(--btn-bg-color-no);
+}
+
+.shui-msg__empty-box {
+	width: 100%;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 10px;
+	gap: 1rem;
+	background-color: var(--white-bg-color);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.shui-msg__empty-icon {
+	font-size: 3rem;
+	color: var(--main-bg-color);
+}
+
+.shui-msg__empty-text {
+	text-align: center;
+	white-space: pre-line;
 }
