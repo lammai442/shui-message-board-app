@@ -44,6 +44,12 @@ functions:
       - httpApi:
           path: /api/messages
           method: POST
+  DeleteMessage:
+    handler: functions/messages/DeleteMessage/index.handler
+    events:
+      - httpApi:
+          path: /api/messages/{msgId}
+          method: DELETE
 
 resources:
   Resources:

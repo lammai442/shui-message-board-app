@@ -3,6 +3,7 @@ import { calculateTimeDiff } from '../../utils/calculateTimeDiff';
 import Button from '../Button/Button';
 import Select from 'react-select';
 import { useState, useEffect, use } from 'react';
+import { FaRegTrashAlt } from 'react-icons/fa';
 
 const filter = [
 	{ value: 'thoughts', label: 'Tankar' },
@@ -15,6 +16,7 @@ const filter = [
 function ShuiMessages({ messages, user }) {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [currentMessages, setCurrentMessages] = useState(messages);
+	const [removeMsg, setRemoveMsg] = useState(false);
 	const [loading, setLoading] = useState(null);
 
 	useEffect(() => {
@@ -34,73 +36,107 @@ function ShuiMessages({ messages, user }) {
 		}
 	}, [selectedCategory]);
 
-	return (
-		<section className='shui-msg__wrapper'>
-			<label className='form__label'>
-				Kategori
-				<Select
-					options={filter}
-					value={selectedCategory}
-					onChange={setSelectedCategory}
-					placeholder='Välj kategori...'
-					styles={{
-						control: (provided) => ({
-							...provided,
-							fontSize: '1rem',
-						}),
-					}}
-				/>
-			</label>
-			{currentMessages.map((message) => {
-				// Kontroll om inloggad user är samma som den som skrev meddelandet
-				const isOwnMessage = user.username === message.PK.slice(5);
+	const handleRemoveMsg = async () => {};
 
-				return (
-					<section
-						className={`shui-msg__box ${message.Category}`}
-						key={message.CreatedAt}>
-						<section className='shui-msg__top-box'>
-							<img
-								src={`${message.Avatar}.png`}
-								alt='Profile image'
-								className='shui-msg__img'
-							/>
-							<section>
-								<h3 className='shui-msg__title'>
-									{message.Title}
-								</h3>
-								<span>
-									<Button
-										className={'shui-msg__username-btn'}>
-										{message.PK.slice(5)}
-									</Button>
-									{` för ${calculateTimeDiff(
-										message.ModifiedAt
-											? message.ModifiedAt
-											: message.CreatedAt
-									)}`}
-								</span>
-								<Button
-									className={'shui-msg__category-btn'}
-									onClick={() =>
-										setSelectedCategory({
-											value: message.Category,
-										})
-									}>
-									{`#${message.Category}`}
-								</Button>
-							</section>
+	return (
+		<>
+			{' '}
+			{removeMsg && (
+				<div className='overlay'>
+					<section className='popup__box'>
+						<p>Vill du ta bort meddelandet?</p>
+						<section className='popup__btn-box'>
+							<button
+								className='popup__yes-btn'
+								onClick={() => handleRemoveMsg()}>
+								Ja
+							</button>
+							<button
+								className='popup__no-btn'
+								onClick={() => setRemoveMsg(false)}>
+								Nej
+							</button>
 						</section>
-						<p className='shui-msg__text'>{message.Message}</p>
-						{isOwnMessage && (
-							<Button className={'shui-msg__edit-btn'}>
-								Redigera
-							</Button>
-						)}
 					</section>
-				);
-			})}
-		</section>
+				</div>
+			)}
+			<section className='shui-msg__wrapper'>
+				<label className='form__label'>
+					Kategori
+					<Select
+						options={filter}
+						value={selectedCategory}
+						onChange={setSelectedCategory}
+						placeholder='Välj kategori...'
+						styles={{
+							control: (provided) => ({
+								...provided,
+								fontSize: '1rem',
+							}),
+						}}
+					/>
+				</label>
+				{currentMessages.map((message) => {
+					// Kontroll om inloggad user är samma som den som skrev meddelandet
+					const isOwnMessage = user.username === message.PK.slice(5);
+
+					return (
+						<section
+							className={`shui-msg__box ${message.Category}`}
+							key={message.CreatedAt}>
+							<section className='shui-msg__top-box'>
+								<img
+									src={`${message.Avatar}.png`}
+									alt='Profile image'
+									className='shui-msg__img'
+								/>
+								<section>
+									<h3 className='shui-msg__title'>
+										{message.Title}
+									</h3>
+									<span>
+										<Button
+											className={
+												'shui-msg__username-btn'
+											}>
+											{message.PK.slice(5)}
+										</Button>
+										{` för ${calculateTimeDiff(
+											message.ModifiedAt
+												? message.ModifiedAt
+												: message.CreatedAt
+										)}`}
+									</span>
+									<Button
+										className={'shui-msg__category-btn'}
+										onClick={() =>
+											setSelectedCategory({
+												value: message.Category,
+											})
+										}>
+										{`#${message.Category}`}
+									</Button>
+								</section>
+							</section>
+							<p className='shui-msg__text'>{message.Message}</p>
+							{isOwnMessage && (
+								<section className='shui-msg__edit-box'>
+									<Button className={'shui-msg__edit-btn'}>
+										Redigera
+									</Button>
+									<Button
+										className={'shui-msg__remove-btn'}
+										onClick={() => setRemoveMsg(true)}>
+										<FaRegTrashAlt />
+										Ta bort
+									</Button>
+								</section>
+							)}
+						</section>
+					);
+				})}
+			</section>
+		</>
 	);
 }
 

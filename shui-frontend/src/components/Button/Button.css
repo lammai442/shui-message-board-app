@@ -61,3 +61,12 @@
 	padding: 0;
 	display: inline;
 }
+
+.shui-msg__remove-btn {
+	background-color: var(--error-text-color);
+	padding: 0.3rem;
+	width: 20%;
+	border-radius: 5px;
+	color: var(--white-text-color);
+	gap: 0.2rem;
+}

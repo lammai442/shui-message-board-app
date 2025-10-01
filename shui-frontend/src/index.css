@@ -8,7 +8,7 @@
 }
 
 :root {
-	/* BG color */
+	/* BG colors */
 	--main-bg-color: #3697da; /* original blå */
 	--main-bg-color-light: #5eb0e0; /* ljusare blå */
 	--main-bg-color-dark: #2473a0; /* mörkare blå */
@@ -20,7 +20,10 @@
 	--white-bg-color: #ffffff;
 	--black-bg-color: #000;
 
+	/* Btn colors */
 	--btn-bg-color: #5eb0e0;
+	--btn-bg-color-yes: #4caf50;
+	--btn-bg-color-no: #e53935;
 
 	/* Categorycolors */
 	--category-thoughts: #a7c7e7;
