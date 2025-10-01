@@ -38,6 +38,12 @@ functions:
       - httpApi:
           path: /api/messages
           method: GET
+  GetMessagesByCategory:
+    handler: functions/messages/GetMessagesByCategory/index.handler
+    events:
+      - httpApi:
+          path: /api/messages/{category}
+          method: GET
   PostMessage:
     handler: functions/messages/PostMessage/index.handler
     events:

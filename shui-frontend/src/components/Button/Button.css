@@ -70,3 +70,29 @@
 	color: var(--white-text-color);
 	gap: 0.2rem;
 }
+
+.category-btn {
+	width: 100%;
+	padding: 2rem;
+	font-size: var(--font-size-large-btn);
+	font-weight: 600;
+}
+
+.thoughts-btn {
+	background-color: var(--category-thoughts);
+}
+
+.ideas-btn {
+	background-color: var(--category-ideas);
+}
+
+.humor-btn {
+	background-color: var(--category-humor);
+}
+
+.questions-btn {
+	background-color: var(--category-questions);
+}
+.all-btn {
+	background-color: var(--main-bg-color);
+}

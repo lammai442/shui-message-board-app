@@ -15,7 +15,7 @@ function Header({ title }) {
 				}}>
 				<Logo style={'header__logo'} />
 			</button>
-			<h2 className='header__title'>{title}</h2>
+			<h1 className='header__title'>{title}</h1>
 			<HamburgerMenu />
 		</header>
 	);

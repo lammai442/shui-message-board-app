@@ -28,20 +28,21 @@ export const getMessages = async () => {
 	}
 };
 export const newMessage = async (messageData) => {
+	const messageId = `MESSAGE#${generateId(5)}`;
 	const command = new PutItemCommand({
 		TableName: 'shui-table',
 		Item: {
 			PK: { S: `USER#${messageData.username}` },
-			SK: { S: `MESSAGE#${generateId(5)}` },
+			SK: { S: messageId },
 			Avatar: { S: messageData.avatar },
 			CreatedAt: { S: new Date().toISOString() },
 			Title: { S: messageData.title },
 			Message: { S: messageData.message },
 			Category: { S: messageData.category },
-			GSI1PK: { S: 'MESSAGE' },
+			GSI1PK: { S: messageId },
 			GSI1SK: { S: `${new Date().toISOString()}` },
-			GSI2PK: { S: 'CATEGORY' },
-			GSI2SK: { S: `CATEGORY#${messageData.category}` },
+			GSI2PK: { S: `CATEGORY#${messageData.category}` },
+			GSI2SK: { S: `${new Date().toISOString()}` },
 		},
 	});
 
@@ -81,5 +82,26 @@ export const deleteMessage = async (msgId, userId) => {
 	} catch (error) {
 		console.log('ERROR in deleteMessage in db', error.message);
 		throw new Error('Could not delete message');
+	}
+};
+
+export const getMessagesByCategory = async (category) => {
+	const command = new QueryCommand({
+		TableName: 'shui-table',
+		IndexName: 'GSI2',
+		KeyConditionExpression: 'GSI2PK = :gsi2pk',
+		ExpressionAttributeValues: {
+			':gsi2pk': { S: `CATEGORY#${category}` },
+		},
+		// Gör så att senaste kommer högst upp
+		ScanIndexForward: false,
+	});
+
+	try {
+		const response = await client.send(command);
+		return response.Items.map((item) => unmarshall(item));
+	} catch (error) {
+		console.log('ERROR in getMessages in client: ', error.message);
+		return [];
 	}
 };

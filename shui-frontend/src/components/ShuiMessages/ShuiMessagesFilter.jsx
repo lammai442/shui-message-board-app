@@ -1,11 +1,20 @@
 import './ShuiMessages.css';
 import { calculateTimeDiff } from '../../utils/calculateTimeDiff';
 import Button from '../Button/Button';
-import { useState, useEffect } from 'react';
+import Select from 'react-select';
+import { useState, useEffect, use } from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { deleteMessage } from '../../api/message';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useMessageStore } from '../../stores/useMessageStore';
+
+const filter = [
+	{ value: 'thoughts', label: 'Tankar' },
+	{ value: 'ideas', label: 'Idéer' },
+	{ value: 'questions', label: 'Frågor' },
+	{ value: 'humor', label: 'Humor' },
+	{ value: 'all', label: 'Alla' },
+];
 
 function ShuiMessages({ messages, user }) {
 	const [selectedCategory, setSelectedCategory] = useState(null);
@@ -23,11 +32,11 @@ function ShuiMessages({ messages, user }) {
 	}, [messages]);
 
 	useEffect(() => {
-		if (selectedCategory === 'all') {
+		if (selectedCategory?.value === 'all') {
 			selectedCategory(messages);
 		} else {
 			const filteredMessages = messages.filter(
-				(m) => m.Category === selectedCategory
+				(m) => m.Category === selectedCategory.value
 			);
 			setCurrentMessages(filteredMessages);
 		}
@@ -80,6 +89,21 @@ function ShuiMessages({ messages, user }) {
 				</div>
 			)}
 			<section className='shui-msg__wrapper'>
+				<label className='form__label'>
+					Kategori
+					<Select
+						options={filter}
+						value={selectedCategory}
+						onChange={setSelectedCategory}
+						placeholder='Välj kategori...'
+						styles={{
+							control: (provided) => ({
+								...provided,
+								fontSize: '1rem',
+							}),
+						}}
+					/>
+				</label>
 				{currentMessages.map((message) => {
 					// Kontroll om inloggad user är samma som den som skrev meddelandet
 					const isOwnMessage = user.username === message.PK.slice(5);
