@@ -38,7 +38,7 @@ export const handler = middy(async (event) => {
 			avatar: response.avatar,
 			email: response.email,
 			username: response.username,
-			token: `Bearer ${token}`,
+			token: token,
 			gender: response.gender,
 			role: response.role,
 		});

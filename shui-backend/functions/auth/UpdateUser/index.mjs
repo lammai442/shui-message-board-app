@@ -17,14 +17,14 @@ export const handler = middy(async (event) => {
 	const { username, password, email, gender, avatar } = event.body;
 
 	if (!authHeader)
-		return sendResponses(404, { message: 'Missing Authorization header' });
+		return sendResponses(401, { message: 'Missing Authorization header' });
 
 	const token = authHeader.slice(7);
 
 	const validToken = verifyToken(token);
 
 	if (!validToken) {
-		return sendResponses(404, { message: 'Token is invalid' });
+		return sendResponses(401, { message: 'Token is invalid' });
 	}
 
 	let { attributes: user } = await getUser(username);

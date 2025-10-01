@@ -4,6 +4,9 @@ import Button from '../Button/Button';
 import Select from 'react-select';
 import { useState, useEffect, use } from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
+import { deleteMessage } from '../../api/message';
+import { useAuthStore } from '../../stores/useAuthStore';
+import { useMessageStore } from '../../stores/useMessageStore';
 
 const filter = [
 	{ value: 'thoughts', label: 'Tankar' },
@@ -16,8 +19,11 @@ const filter = [
 function ShuiMessages({ messages, user }) {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [currentMessages, setCurrentMessages] = useState(messages);
-	const [removeMsg, setRemoveMsg] = useState(false);
+	const [deleteMsgPopup, setDeleteMsgPopup] = useState(false);
+	const [deleteMsg, setDeleteMsg] = useState(null);
+	const showMsg = useMessageStore((state) => state.showMsg);
 	const [loading, setLoading] = useState(null);
+	const token = useAuthStore((state) => state.user.token);
 
 	useEffect(() => {
 		if (messages && messages.length > 0) {
@@ -36,24 +42,46 @@ function ShuiMessages({ messages, user }) {
 		}
 	}, [selectedCategory]);
 
-	const handleRemoveMsg = async () => {};
+	const handledeleteMsgPopup = async () => {
+		const response = await deleteMessage(
+			deleteMsg.msgId,
+			deleteMsg.userId,
+			token
+		);
+		console.log(response);
+
+		if (response.status === 200) {
+			setDeleteMsg(null);
+			setDeleteMsgPopup(false);
+			showMsg('Ditt meddelande är borttaget', true);
+
+			const messagesAfterDelete = currentMessages.filter(
+				(m) => m.SK !== `MESSAGE#${deleteMsg.msgId}`
+			);
+			setCurrentMessages(messagesAfterDelete);
+		} else {
+			showMsg('Ditt meddelande kunde inte tas bort', false);
+			setDeleteMsg(null);
+			setDeleteMsgPopup(false);
+		}
+	};
 
 	return (
 		<>
 			{' '}
-			{removeMsg && (
+			{deleteMsgPopup && (
 				<div className='overlay'>
 					<section className='popup__box'>
 						<p>Vill du ta bort meddelandet?</p>
 						<section className='popup__btn-box'>
 							<button
 								className='popup__yes-btn'
-								onClick={() => handleRemoveMsg()}>
+								onClick={() => handledeleteMsgPopup(deleteMsg)}>
 								Ja
 							</button>
 							<button
 								className='popup__no-btn'
-								onClick={() => setRemoveMsg(false)}>
+								onClick={() => setDeleteMsgPopup(false)}>
 								Nej
 							</button>
 						</section>
@@ -126,7 +154,13 @@ function ShuiMessages({ messages, user }) {
 									</Button>
 									<Button
 										className={'shui-msg__remove-btn'}
-										onClick={() => setRemoveMsg(true)}>
+										onClick={() => {
+											setDeleteMsgPopup(true);
+											setDeleteMsg({
+												msgId: message.SK.slice(8),
+												userId: message.PK.slice(5),
+											});
+										}}>
 										<FaRegTrashAlt />
 										Ta bort
 									</Button>

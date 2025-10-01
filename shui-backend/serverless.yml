@@ -48,7 +48,7 @@ functions:
     handler: functions/messages/DeleteMessage/index.handler
     events:
       - httpApi:
-          path: /api/messages/{msgId}
+          path: /api/messages/{msgId}/{userId}
           method: DELETE
 
 resources:

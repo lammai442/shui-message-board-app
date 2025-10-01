@@ -48,3 +48,30 @@ export const postMessage = async (data, token) => {
 		});
 	return response;
 };
+
+export const deleteMessage = async (msgId, userId, token) => {
+	const response = await axios
+		.delete(
+			`https://v2yvbkvd05.execute-api.eu-north-1.amazonaws.com/api/messages/${msgId}/${userId}`,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		)
+		.then((response) => {
+			return {
+				success: true,
+				data: response.data,
+				status: response.status,
+			};
+		})
+		.catch((error) => {
+			return {
+				success: false,
+				data: error.response?.data || { message: error.message },
+				status: error.response?.status || 500,
+			};
+		});
+	return response;
+};

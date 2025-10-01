@@ -1,5 +1,9 @@
 import { client } from './client.mjs';
-import { PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
+import {
+	PutItemCommand,
+	QueryCommand,
+	DeleteItemCommand,
+} from '@aws-sdk/client-dynamodb';
 import { generateId } from '../utils/uuid.mjs';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
 
@@ -47,5 +51,35 @@ export const newMessage = async (messageData) => {
 	} catch (error) {
 		console.log('ERROR in registerUser in client: ', error.message);
 		return false;
+	}
+};
+
+export const deleteMessage = async (msgId, userId) => {
+	const command = new DeleteItemCommand({
+		TableName: 'shui-table',
+		Key: {
+			PK: { S: `USER#${userId}` },
+			SK: { S: `MESSAGE#${msgId}` },
+		},
+		ReturnValues: 'ALL_OLD',
+	});
+
+	try {
+		const result = await client.send(command);
+		if (!result.Attributes) {
+			return {
+				success: false,
+				message: 'Message not found or already deleted',
+			};
+		}
+
+		return {
+			success: true,
+			message: 'Meddelande är borttagen',
+			deletedMessage: result.Attributes,
+		};
+	} catch (error) {
+		console.log('ERROR in deleteMessage in db', error.message);
+		throw new Error('Could not delete message');
 	}
 };
