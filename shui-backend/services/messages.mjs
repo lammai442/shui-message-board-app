@@ -21,6 +21,7 @@ export const getMessages = async () => {
 
 	try {
 		const response = await client.send(command);
+		console.log('RESPONSE: ', response);
 		return response.Items.map((item) => unmarshall(item));
 	} catch (error) {
 		console.log('ERROR in getMessages in client: ', error.message);
@@ -39,7 +40,7 @@ export const newMessage = async (messageData) => {
 			Title: { S: messageData.title },
 			Message: { S: messageData.message },
 			Category: { S: messageData.category },
-			GSI1PK: { S: messageId },
+			GSI1PK: { S: 'MESSAGE' },
 			GSI1SK: { S: `${new Date().toISOString()}` },
 			GSI2PK: { S: `CATEGORY#${messageData.category}` },
 			GSI2SK: { S: `${new Date().toISOString()}` },

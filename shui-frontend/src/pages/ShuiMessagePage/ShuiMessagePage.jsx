@@ -81,7 +81,7 @@ function ShuiMessagePage() {
 		<div>
 			<Header title={'NYTT SHUI'} />
 			<main>
-				{loading && <Loading />}
+				{loading && <Loading text={'Publicerar...'} />}
 				<form className='form__shui-msg' onSubmit={handleSubmit}>
 					<label className='form__label'>
 						Kategori

@@ -8,7 +8,7 @@ export const handler = middy(async (event) => {
 	const { category } = event.pathParameters;
 	const response = await getMessagesByCategory(category);
 
-	if (response && response.length > 0) {
+	if (response) {
 		return sendResponses(200, {
 			success: true,
 			message: `Successfully fetched messages in category ${category}`,
@@ -17,7 +17,7 @@ export const handler = middy(async (event) => {
 	} else {
 		return sendResponses(404, {
 			success: false,
-			message: `Could not find any messages in category ${category}`,
+			message: `Could not fetch messages in category ${category}`,
 		});
 	}
 })

@@ -45,10 +45,11 @@ function HomePage() {
 
 	// Laddar meddelanden
 	useEffect(() => {
+		console.log(selectedCategory);
+
 		// Hoppar över om inget värde finns
 		if (!selectedCategory) return;
 		setLoading(true);
-		console.log(selectedCategory);
 
 		if (selectedCategory === 'all') {
 			const fetchAllMessages = async () => {
@@ -56,6 +57,8 @@ function HomePage() {
 					const messageData = await getMessages();
 					setMessages(messageData.data.data);
 					setLoading(false);
+
+					console.log(messageData);
 				} catch (error) {
 					console.error('Kunde inte hämta meddelanden', error);
 				}
@@ -63,12 +66,17 @@ function HomePage() {
 			fetchAllMessages();
 		} else {
 			console.log('här');
+			console.log(selectedCategory);
 
 			const fetchCategoryMessages = async (selectedCategory) => {
 				try {
+					console.log(selectedCategory);
+
 					const messageData = await getMessagesByCategories(
 						selectedCategory
 					);
+					console.log(messageData);
+
 					setMessages(messageData.data.data);
 					setLoading(false);
 				} catch (error) {
@@ -78,7 +86,7 @@ function HomePage() {
 					);
 				}
 			};
-			fetchCategoryMessages();
+			fetchCategoryMessages(selectedCategory);
 		}
 	}, [selectedCategory]);
 
@@ -106,7 +114,7 @@ function HomePage() {
 						</section>
 					</section>
 
-					{selectedCategory && messages.length > 0 && (
+					{selectedCategory && (
 						<ShuiMessages messages={messages} user={user} />
 					)}
 				</section>
