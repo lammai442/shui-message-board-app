@@ -12,6 +12,7 @@ import Loading from '../../components/Loading/Loading';
 import { categoriesValues } from '../../data/data.js';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../../components/BackButton/BackButton.jsx';
+import { useEffect } from 'react';
 function ShuiMessagePage() {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [title, setTitle] = useState('');
@@ -23,6 +24,12 @@ function ShuiMessagePage() {
 	const titleRef = useRef();
 	const messageRef = useRef();
 	const user = useAuthStore((state) => state.user);
+
+	useEffect(() => {
+		if (selectedCategory) {
+			setErrorFormMsg(null);
+		}
+	}, [selectedCategory]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -51,8 +58,6 @@ function ShuiMessagePage() {
 				user.token
 			);
 			setLoading(false);
-
-			console.log(response);
 
 			if (response.data.message === 'Token is invalid') {
 				return showMsg(
@@ -106,7 +111,6 @@ function ShuiMessagePage() {
 							onChange={(e) => setTitle(e.target.value)}
 						/>
 					</label>
-
 					<label className='form__label'>
 						Skriv din tanke här
 						<textarea

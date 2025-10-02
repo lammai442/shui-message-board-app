@@ -41,7 +41,6 @@ function ShuiMessages({ messages, user, loading }) {
 			deleteMsg.userId,
 			token
 		);
-		console.log(response);
 
 		if (response.status === 200) {
 			setDeleteMsg(null);
@@ -101,8 +100,6 @@ function ShuiMessages({ messages, user, loading }) {
 				{currentMessages.map((message) => {
 					// Kontroll om inloggad user är samma som den som skrev meddelandet
 					const isOwnMessage = user.username === message.PK.slice(5);
-					if (message.Category === 'thoughts')
-						message.Category = 'tankar';
 
 					return (
 						<section
