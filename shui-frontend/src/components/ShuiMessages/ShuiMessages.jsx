@@ -84,7 +84,7 @@ function ShuiMessages({ messages, user, loading }) {
 				{!loading && currentMessages.length === 0 && (
 					<section className='shui-msg__empty-box'>
 						<p className='shui-msg__empty-text'>
-							{`Här var det tomt! \n Men du kan bli först att skapa ett nytt Shui`}
+							{`Shuuuite... \nHär var det tomt! \n Men du kan bli först att skapa ett nytt Shui`}
 						</p>
 						<p className='shui-msg__empty-text'></p>
 						<Button
@@ -140,7 +140,15 @@ function ShuiMessages({ messages, user, loading }) {
 									<Button
 										className={'shui-msg__edit-btn'}
 										onClick={() =>
-											navigate('/edit-message')
+											navigate('/edit-message', {
+												state: {
+													messageId: message.SK,
+													prevTitle: message.Title,
+													prevText: message.Message,
+													prevCategory:
+														message.Category,
+												},
+											})
 										}>
 										Redigera
 									</Button>

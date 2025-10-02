@@ -23,3 +23,13 @@
 	gap: 0.4rem;
 	flex-direction: row;
 }
+
+.categories__btn--active {
+	transform: scale(1.1);
+	border: 2px solid var(--black-bg-color); /* Exempel: markera aktiv */
+}
+
+.categories__btn-box button:not(.categories__btn--active) {
+	opacity: 0.5;
+	color: #333;
+}

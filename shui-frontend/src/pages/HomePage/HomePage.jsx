@@ -76,7 +76,11 @@ function HomePage() {
 									key={c.title}
 									iconLeft={c.iconLeft}
 									iconLeftClassName={c.category}
-									className={`${c.className}${
+									className={`${c.className} ${
+										selectedCategory === c.category
+											? 'categories__btn--active'
+											: ''
+									} ${
 										selectedCategory &&
 										selectedCategory.length > 0
 											? ' categories__btn--small'

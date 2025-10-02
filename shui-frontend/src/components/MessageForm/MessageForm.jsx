@@ -7,23 +7,39 @@ import { useState } from 'react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { postMessage } from '../../api/message';
 import { useMessageStore } from '../../stores/useMessageStore';
-import Loading from '../../components/Loading/Loading';
 import { categoriesValues } from '../../data/data.js';
 import { useNavigate } from 'react-router-dom';
-import BackButton from '../../components/BackButton/BackButton.jsx';
 import { useEffect } from 'react';
-export function MessageForm() {
+import { useLocation } from 'react-router-dom';
+export function MessageForm({ setLoading }) {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [title, setTitle] = useState('');
 	const [message, setMessage] = useState('');
 	const [errorFormMsg, setErrorFormMsg] = useState(null);
-	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const titleRef = useRef();
 	const messageRef = useRef();
 	const user = useAuthStore((state) => state.user);
+	const location = useLocation();
+	const prevMsg = location.state || {};
 
+	// Om formen används i redigera Shui meddelande
+	useEffect(() => {
+		if (prevMsg) {
+			if (prevMsg.prevCategory) {
+				// Hitta objektet i options som matchar prevCategory
+				const categoryOption = categoriesValues.find(
+					(c) => c.value === prevMsg.prevCategory
+				);
+				setSelectedCategory(categoryOption);
+			}
+			if (prevMsg.prevTitle) setTitle(prevMsg.prevTitle);
+			if (prevMsg.prevText) setMessage(prevMsg.prevText);
+		}
+	}, [prevMsg]);
+
+	// Tar bort felmeddelande när användaren har valt kategori
 	useEffect(() => {
 		if (selectedCategory) {
 			setErrorFormMsg(null);
