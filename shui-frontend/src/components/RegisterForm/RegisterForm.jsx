@@ -167,11 +167,11 @@ function RegisterForm({ setLoginForm, setLoading }) {
 				</Button>
 				<p className='form__text'>
 					Redan medlem?{' '}
-					<span
-						className='form__link'
+					<Button
+						className='form__link-btn form__link-bold'
 						onClick={() => setLoginForm(true)}>
 						Logga in här
-					</span>
+					</Button>
 				</p>
 			</form>
 		</>

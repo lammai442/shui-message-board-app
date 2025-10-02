@@ -3,6 +3,7 @@ import {
 	PutItemCommand,
 	QueryCommand,
 	DeleteItemCommand,
+	UpdateItemCommand,
 } from '@aws-sdk/client-dynamodb';
 import { generateId } from '../utils/uuid.mjs';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
@@ -125,5 +126,37 @@ export const getMessagesByCategory = async (category) => {
 	} catch (error) {
 		console.log('ERROR in getMessages in client: ', error.message);
 		return [];
+	}
+};
+
+export const editMessage = async (msgData) => {
+	const command = new UpdateItemCommand({
+		TableName: 'shui-table',
+		Key: {
+			PK: { S: `USER#${msgData.userId}` },
+			SK: { S: msgData.msgId },
+		},
+		UpdateExpression:
+			'SET Message = :message, Category = :category, Title = :title, GSI2PK = :gsi2pk, modifiedAt = :modifiedAt',
+		ExpressionAttributeValues: {
+			':message': { S: msgData.message },
+			':title': { S: msgData.title },
+			':gsi2pk': { S: `CATEGORY${msgData.category}` },
+			':category': { S: msgData.category },
+			':modifiedAt': { S: new Date().toISOString() },
+		},
+		// Här måste både PK och SK finnas för funktionen ska kunna köras
+		ConditionExpression: 'attribute_exists(PK) AND attribute_exists(SK)',
+		ReturnValues: 'ALL_NEW',
+	});
+
+	try {
+		const response = await client.send(command);
+		const editedMessage = unmarshall(response.Attributes);
+
+		return editedMessage;
+	} catch (error) {
+		console.log('ERROR in EditMessage to db: ', error.message);
+		return false;
 	}
 };

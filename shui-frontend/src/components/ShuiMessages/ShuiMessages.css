@@ -1,9 +1,7 @@
 .shui-msg__wrapper {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
-	/* height: 700px; */
-	/* overflow-y: auto; */
+	gap: 1rem;
 }
 
 .shui-msg__box {
@@ -23,12 +21,18 @@
 }
 
 .shui-msg__img {
-	width: 50px;
-	height: 50px;
+	width: 55px;
+	height: 55px;
 }
 
 .shui-msg__title {
 	font-size: var(--font-size-h3);
+}
+
+.shui-msg__text {
+	margin-top: 0.5rem;
+	font-size: var(--font-size-large-p);
+	font-style: italic;
 }
 
 .shui-msg__empty {

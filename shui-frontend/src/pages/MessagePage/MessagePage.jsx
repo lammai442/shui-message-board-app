@@ -7,10 +7,11 @@ import { useAuthStore } from '../../stores/useAuthStore';
 import { useMessageStore } from '../../stores/useMessageStore';
 import { fetchMessagesByUserId } from '../../hooks/useFetch.mjs';
 import BackButton from '../../components/BackButton/BackButton';
+import Loading from '../../components/Loading/Loading';
 
 function MessagePage() {
 	const [messages, setMessages] = useState([]);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const navigate = useNavigate();
 	const user = useAuthStore((state) => state.user);
@@ -43,9 +44,10 @@ function MessagePage() {
 
 	return (
 		<div>
-			<Header title={'MEDDELANDEN'} />
+			<Header title={'DINA SHUI'} />
 			<main className='main__wrapper'>
 				<BackButton></BackButton>
+				{loading && <Loading text={'Laddar meddelanden'} />}
 				<ShuiMessages
 					messages={messages}
 					user={user}

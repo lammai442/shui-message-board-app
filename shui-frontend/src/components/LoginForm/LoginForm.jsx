@@ -88,11 +88,13 @@ function LoginForm({ setLoginForm, setLoading }) {
 			</Button>
 			<p className='form__text'>
 				Inget konto?{' '}
-				<span
-					className='form__link'
+				<Button
+					className='form__link-btn'
+					type={'button'}
 					onClick={() => setLoginForm(false)}>
-					Klicka här för att registrera
-				</span>
+					<span className='form__link-bold'>Klicka här</span> för att
+					registrera
+				</Button>
 			</p>
 		</form>
 	);

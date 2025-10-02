@@ -53,6 +53,7 @@
 }
 
 .shui-msg__username-btn {
+	margin-top: 0.2rem;
 	background: none;
 	color: var(--black-text-color);
 	font-size: var(--font-size-small-btn);
@@ -77,6 +78,7 @@
 	font-size: var(--font-size-large-btn);
 	font-weight: 600;
 	background-color: var(--white-bg-color);
+	color: var(--black-text-color);
 }
 
 .tankar-btn {
@@ -113,4 +115,8 @@
 	color: var(--white-text-color);
 	font-size: var(--font-size-small-p);
 	border-radius: 5px;
+}
+
+.sort-time__btn {
+	font-size: var(--font-size-medium-btn);
 }

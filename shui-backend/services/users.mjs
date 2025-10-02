@@ -96,7 +96,7 @@ export const updateUser = async (user) => {
 			SK: { S: 'PROFILE' },
 		},
 		UpdateExpression:
-			'SET attributes.email = :newEmail, attributes.avatar = :newAvatar, attributes.password = :newPassword, attributes.gender = :newGender, modifiedAT = :newModifiedAt',
+			'SET attributes.email = :newEmail, attributes.avatar = :newAvatar, attributes.password = :newPassword, attributes.gender = :newGender, modifiedAt = :newModifiedAt',
 		ExpressionAttributeValues: {
 			':newEmail': { S: user.email },
 			':newAvatar': { S: user.avatar },

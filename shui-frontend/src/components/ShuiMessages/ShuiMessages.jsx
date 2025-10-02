@@ -8,8 +8,17 @@ import { useAuthStore } from '../../stores/useAuthStore';
 import { useMessageStore } from '../../stores/useMessageStore';
 import { useNavigate } from 'react-router-dom';
 import shuiLogoWhiteWrite from '../../assets/logo/shui-logo-white-write.svg';
-
-function ShuiMessages({ messages, user, loading }) {
+import SortByTimeButton from '../SortByTimeButton/SortByTimeButton';
+import { sortByOldest } from '../../utils/sortByOldest.js';
+import { TbClockDown } from 'react-icons/tb';
+import { TbClockUp } from 'react-icons/tb';
+function ShuiMessages({
+	messages,
+	user,
+	loading,
+	sortedMsgByOldest,
+	setSortMsgByOldest,
+}) {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [currentMessages, setCurrentMessages] = useState(messages);
 	const [deleteMsgPopup, setDeleteMsgPopup] = useState(false);
@@ -26,7 +35,7 @@ function ShuiMessages({ messages, user, loading }) {
 
 	useEffect(() => {
 		if (selectedCategory === 'all') {
-			selectedCategory(messages);
+			setSelectedCategory(messages);
 		} else {
 			const filteredMessages = messages.filter(
 				(m) => m.Category === selectedCategory
@@ -58,9 +67,17 @@ function ShuiMessages({ messages, user, loading }) {
 		}
 	};
 
+	const handleSortByTime = () => {
+		const sortByEldest = sortByOldest(
+			[...currentMessages],
+			sortedMsgByOldest
+		);
+		setCurrentMessages(sortByEldest);
+		setSortMsgByOldest(!sortedMsgByOldest);
+	};
+
 	return (
 		<>
-			{' '}
 			{deleteMsgPopup && (
 				<div className='overlay'>
 					<section className='popup__box'>
@@ -81,10 +98,11 @@ function ShuiMessages({ messages, user, loading }) {
 				</div>
 			)}
 			<section className='shui-msg__wrapper'>
+				{/* Om det har laddas klart och det finns inga meddelanden */}
 				{!loading && currentMessages.length === 0 && (
 					<section className='shui-msg__empty-box'>
 						<p className='shui-msg__empty-text'>
-							{`Shuuuite... \nHär var det tomt! \n Men du kan bli först att skapa ett nytt Shui`}
+							{`Shuuuite... \nHär var det tomt! \nMen du kan bli först att skapa ett nytt Shui`}
 						</p>
 						<p className='shui-msg__empty-text'></p>
 						<Button
@@ -96,6 +114,18 @@ function ShuiMessages({ messages, user, loading }) {
 							Nytt Shui
 						</Button>
 					</section>
+				)}
+				{currentMessages.length > 0 && (
+					<SortByTimeButton
+						className={'sort-time__btn'}
+						icon={
+							sortedMsgByOldest ? <TbClockDown /> : <TbClockUp />
+						}
+						text={`${
+							sortedMsgByOldest ? 'Äldst först' : 'Senast först'
+						}`}
+						onClick={() => handleSortByTime()}
+					/>
 				)}
 				{currentMessages.map((message) => {
 					// Kontroll om inloggad user är samma som den som skrev meddelandet
@@ -142,7 +172,8 @@ function ShuiMessages({ messages, user, loading }) {
 										onClick={() =>
 											navigate('/edit-message', {
 												state: {
-													messageId: message.SK,
+													userId: user.username,
+													msgId: message.SK,
 													prevTitle: message.Title,
 													prevText: message.Message,
 													prevCategory:

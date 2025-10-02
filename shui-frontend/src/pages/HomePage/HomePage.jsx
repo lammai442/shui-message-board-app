@@ -14,6 +14,7 @@ function HomePage() {
 	const [messages, setMessages] = useState([]);
 	const [selectedCategory, setSelectCategory] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [sortedMsgByOldest, setSortMsgByOldest] = useState(false);
 	const navigate = useNavigate();
 	const user = useAuthStore((state) => state.user);
 
@@ -52,6 +53,7 @@ function HomePage() {
 				}
 			};
 			fetchCategoryMessages(selectedCategory);
+			setSortMsgByOldest(false);
 		}
 	}, [selectedCategory]);
 
@@ -62,8 +64,13 @@ function HomePage() {
 				{loading && <Loading text={'Laddar meddelanden'} />}
 				<section className='messages__wrapper'>
 					<section className='categories__box'>
-						<h2 className='categories_title'>
-							Välj en kategori och hitta nya tankar
+						<h2
+							className={`categories__title  ${
+								selectedCategory && selectedCategory.length > 0
+									? 'categories__title--none'
+									: ''
+							}`}>
+							Utforska bland alla Shui
 						</h2>
 						<section
 							className={`categories__btn-box ${
@@ -100,6 +107,8 @@ function HomePage() {
 							messages={messages}
 							user={user}
 							loading={loading}
+							setSortMsgByOldest={setSortMsgByOldest}
+							sortedMsgByOldest={sortedMsgByOldest}
 						/>
 					)}
 				</section>

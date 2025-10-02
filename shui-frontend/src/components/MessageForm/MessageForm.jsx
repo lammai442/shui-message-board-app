@@ -32,6 +32,7 @@ export function MessageForm({ setLoading }) {
 				const categoryOption = categoriesValues.find(
 					(c) => c.value === prevMsg.prevCategory
 				);
+				// Lägg in den som default från början
 				setSelectedCategory(categoryOption);
 			}
 			if (prevMsg.prevTitle) setTitle(prevMsg.prevTitle);
@@ -88,7 +89,11 @@ export function MessageForm({ setLoading }) {
 			if (response.status === 201) {
 				setTitle('');
 				setMessage('');
-				return showMsg('Ditt meddelande är publicerad', true);
+				return showMsg(
+					'Ditt meddelande är publicerad',
+					true,
+					navigate('/')
+				);
 			}
 		}
 	};

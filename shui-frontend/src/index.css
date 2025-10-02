@@ -36,7 +36,7 @@
 	/* Text color */
 	--white-text-color: #ffffff;
 	--black-text-color: #000;
-	--error-text-color: #f50000;
+	--error-text-color: #e53935;
 
 	--font-size-base: 1rem;
 	--font-size-h1: 2rem;
@@ -46,6 +46,7 @@
 	--font-size-large-p: 1.25rem;
 	--font-size-small-p: 1rem;
 	--font-size-large-btn: 1.5rem;
+	--font-size-medium-btn: 1.25rem;
 	--font-size-small-btn: 1rem;
 }
 
@@ -56,6 +57,10 @@ button {
 
 li {
 	list-style-type: none;
+}
+
+p {
+	font-size: var(--font-size-large-p);
 }
 
 .main__wrapper {
