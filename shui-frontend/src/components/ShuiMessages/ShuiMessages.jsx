@@ -6,7 +6,8 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import { deleteMessage } from '../../api/message';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useMessageStore } from '../../stores/useMessageStore';
-import { FaRegFaceGrinStars } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
+import shuiLogoWhiteWrite from '../../assets/logo/shui-logo-white-write.svg';
 
 function ShuiMessages({ messages, user, loading }) {
 	const [selectedCategory, setSelectedCategory] = useState(null);
@@ -15,6 +16,7 @@ function ShuiMessages({ messages, user, loading }) {
 	const [deleteMsg, setDeleteMsg] = useState(null);
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const token = useAuthStore((state) => state.user.token);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (messages && messages.length > 0) {
@@ -83,10 +85,17 @@ function ShuiMessages({ messages, user, loading }) {
 				{!loading && currentMessages.length === 0 && (
 					<section className='shui-msg__empty-box'>
 						<p className='shui-msg__empty-text'>
-							{`Här var det tomt! \n Men du kan bli först att shuia`}
+							{`Här var det tomt! \n Men du kan bli först att skapa ett nytt Shui`}
 						</p>
 						<p className='shui-msg__empty-text'></p>
-						<FaRegFaceGrinStars className='shui-msg__empty-icon' />
+						<Button
+							className={'shui-msg__empty-new-shui'}
+							iconLeft={shuiLogoWhiteWrite}
+							onClick={() => {
+								navigate('/shuimessage');
+							}}>
+							Nytt Shui
+						</Button>
 					</section>
 				)}
 				{currentMessages.map((message) => {
@@ -123,12 +132,7 @@ function ShuiMessages({ messages, user, loading }) {
 										)}`}
 									</span>
 									<Button
-										className={`shui-msg__category-btn ${message.Category}-btn`}
-										onClick={() =>
-											setSelectedCategory({
-												value: message.Category,
-											})
-										}>
+										className={`shui-msg__category-btn ${message.Category}-btn`}>
 										{`#${message.Category}`}
 									</Button>
 								</section>

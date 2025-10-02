@@ -49,7 +49,7 @@
 	border-radius: 5px;
 	padding: 0.2rem 0.5rem;
 	font-size: var(--font-size-small-p);
-	cursor: pointer;
+	position: none;
 }
 
 .shui-msg__username-btn {
@@ -99,10 +99,18 @@
 }
 .categories__btn--small {
 	padding: 0.4rem;
-	border: 1px solid var(--black-bg-color);
 	font-size: var(--font-size-small-p);
+	border-radius: 10px;
 }
 
 .categories__btn--small > img {
 	display: none;
+}
+
+.shui-msg__empty-new-shui {
+	padding: 0.5rem;
+	background-color: var(--btn-bg-color);
+	color: var(--white-text-color);
+	font-size: var(--font-size-small-p);
+	border-radius: 5px;
 }

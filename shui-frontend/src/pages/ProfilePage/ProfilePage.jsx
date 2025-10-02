@@ -10,6 +10,7 @@ import { validateUser } from '../../utils/validators';
 import { updateUserApi } from '../../api/auth';
 import Button from '../../components/Button/Button';
 import Loading from '../../components/Loading/Loading';
+import BackButton from '../../components/BackButton/BackButton';
 
 function ProfilePage() {
 	const { avatar, username, email, gender } = useAuthStore(
@@ -153,6 +154,7 @@ function ProfilePage() {
 			<Header title={'ÄNDRA PROFIL'} />
 			<main className='main__wrapper'>
 				{loading && <Loading text={'Sparar ändringar'} />}
+				<BackButton />
 				<form className='form' onSubmit={handleSubmit}>
 					<img
 						className='form__avatar-img'

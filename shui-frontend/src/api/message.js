@@ -22,10 +22,32 @@ export const getMessages = async () => {
 	return response;
 };
 
+export const getMessagesByUserId = async (userId) => {
+	const response = await axios
+		.get(
+			`https://v2yvbkvd05.execute-api.eu-north-1.amazonaws.com/api/messages/user/${userId}`
+		)
+		.then((response) => {
+			return {
+				success: true,
+				data: response.data,
+				status: response.status,
+			};
+		})
+		.catch((error) => {
+			return {
+				success: false,
+				data: error.response?.data || { message: error.message },
+				status: error.response?.status || 500,
+			};
+		});
+	return response;
+};
+
 export const getMessagesByCategories = async (category) => {
 	const response = await axios
 		.get(
-			`https://v2yvbkvd05.execute-api.eu-north-1.amazonaws.com/api/messages/${category}`
+			`https://v2yvbkvd05.execute-api.eu-north-1.amazonaws.com/api/messages/category/${category}`
 		)
 		.then((response) => {
 			return {

@@ -11,6 +11,7 @@ import { useMessageStore } from '../../stores/useMessageStore';
 import Loading from '../../components/Loading/Loading';
 import { categoriesValues } from '../../data/data.js';
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../../components/BackButton/BackButton.jsx';
 function ShuiMessagePage() {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [title, setTitle] = useState('');
@@ -77,6 +78,7 @@ function ShuiMessagePage() {
 			<Header title={'NYTT SHUI'} />
 			<main className='main__wrapper'>
 				{loading && <Loading text={'Publicerar...'} />}
+				<BackButton />
 				<form className='form__shui-msg' onSubmit={handleSubmit}>
 					<label className='form__label'>
 						Kategori

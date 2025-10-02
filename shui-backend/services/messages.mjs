@@ -86,6 +86,27 @@ export const deleteMessage = async (msgId, userId) => {
 	}
 };
 
+export const getMessagesByUserId = async (userId) => {
+	const command = new QueryCommand({
+		TableName: 'shui-table',
+		KeyConditionExpression: 'PK = :pk AND begins_with(SK, :skPrefix)',
+		ExpressionAttributeValues: {
+			':pk': { S: `USER#${userId}` },
+			':skPrefix': { S: 'MESSAGE#' },
+		},
+		// Gör så att senaste kommer högst upp
+		ScanIndexForward: false,
+	});
+
+	try {
+		const response = await client.send(command);
+		return response.Items.map((item) => unmarshall(item));
+	} catch (error) {
+		console.log('ERROR in getMessages in client: ', error.message);
+		return [];
+	}
+};
+
 export const getMessagesByCategory = async (category) => {
 	const command = new QueryCommand({
 		TableName: 'shui-table',

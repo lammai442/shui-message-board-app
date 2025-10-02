@@ -38,11 +38,17 @@ functions:
       - httpApi:
           path: /api/messages
           method: GET
+  GetMessagesByUserId:
+    handler: functions/messages/GetMessagesByUserId/index.handler
+    events:
+      - httpApi:
+          path: /api/messages/user/{userId}
+          method: GET
   GetMessagesByCategory:
     handler: functions/messages/GetMessagesByCategory/index.handler
     events:
       - httpApi:
-          path: /api/messages/{category}
+          path: /api/messages/category/{category}
           method: GET
   PostMessage:
     handler: functions/messages/PostMessage/index.handler
