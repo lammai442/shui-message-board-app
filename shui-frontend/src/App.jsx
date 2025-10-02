@@ -6,6 +6,7 @@ import ShowMsg from './components/ShowMsg/ShowMsg';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import MessagePage from './pages/MessagePage/MessagePage';
 import ShuiMessagePage from './pages/ShuiMessagePage/ShuiMessagePage';
+import EditMessagePage from './pages/EditMessagePage/EditMessagePage';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 					<Route path='/profile' element={<ProfilePage />} />
 					<Route path='/messages' element={<MessagePage />} />
 					<Route path='/shuimessage' element={<ShuiMessagePage />} />
+					<Route path='/edit-message' element={<EditMessagePage />} />
 				</Route>
 			</Routes>
 			<ShowMsg />

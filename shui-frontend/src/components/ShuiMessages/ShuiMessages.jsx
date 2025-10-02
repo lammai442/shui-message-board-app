@@ -137,7 +137,11 @@ function ShuiMessages({ messages, user, loading }) {
 							<p className='shui-msg__text'>{message.Message}</p>
 							{isOwnMessage && (
 								<section className='shui-msg__edit-box'>
-									<Button className={'shui-msg__edit-btn'}>
+									<Button
+										className={'shui-msg__edit-btn'}
+										onClick={() =>
+											navigate('/edit-message')
+										}>
 										Redigera
 									</Button>
 									<Button
