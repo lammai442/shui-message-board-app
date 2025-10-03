@@ -1,6 +1,6 @@
 # Shui Message Board App
 
-[Visit the live website](http://shui-message-board-app.s3-website.eu-north-1.amazonaws.com)
+<a href="http://shui-message-board-app.s3-website.eu-north-1.amazonaws.com" target="_blank" rel="noopener noreferrer">Visit the live website</a>
 
 A **digital message board** application built with **React** and the **AWS Serverless Framework**, designed to let users post, edit, and delete messages seamlessly.
 
