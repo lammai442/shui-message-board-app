@@ -57,7 +57,7 @@ function Nav({ openMenu, setOpenMenu }) {
 					<img
 						className='nav__profile-avatar'
 						src={`${avatar}.png`}
-						alt=''
+						alt='Profile image'
 					/>
 					<h2 className='nav__profile-title'>{username}</h2>
 				</section>
@@ -89,6 +89,7 @@ function Nav({ openMenu, setOpenMenu }) {
 									<img
 										src={navItem.customIcon}
 										className='nav__item-icon'
+										alt='nav-icons'
 									/>
 								)}
 								<section className='nav__item-content'>

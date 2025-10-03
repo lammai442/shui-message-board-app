@@ -17,6 +17,7 @@ function Button({
 				<img
 					src={iconLeft}
 					className={`btn__icon-left ${iconLeftClassName}`}
+					alt='Icons'
 				/>
 			)}
 			{children}
