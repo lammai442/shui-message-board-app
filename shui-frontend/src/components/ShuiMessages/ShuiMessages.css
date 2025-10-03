@@ -104,3 +104,13 @@
 	text-align: center;
 	white-space: pre-line;
 }
+
+.suit-messages__top-box {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.suit-messages__top-box--flex-end {
+	justify-content: flex-end;
+}

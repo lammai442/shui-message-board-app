@@ -6,7 +6,6 @@ import ShuiMessages from '../../components/ShuiMessages/ShuiMessages';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useMessageStore } from '../../stores/useMessageStore';
 import { fetchMessagesByUserId } from '../../hooks/useFetch.mjs';
-import BackButton from '../../components/BackButton/BackButton';
 import Loading from '../../components/Loading/Loading';
 
 function MessagePage() {
@@ -46,9 +45,9 @@ function MessagePage() {
 		<div>
 			<Header title={'DINA SHUI'} />
 			<main className='main__wrapper'>
-				<BackButton></BackButton>
 				{loading && <Loading text={'Laddar meddelanden'} />}
 				<ShuiMessages
+					backButton={true}
 					messages={messages}
 					user={user}
 					loading={loading}></ShuiMessages>

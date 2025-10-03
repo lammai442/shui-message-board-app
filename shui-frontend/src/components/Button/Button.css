@@ -119,4 +119,8 @@
 
 .sort-time__btn {
 	font-size: var(--font-size-medium-btn);
+	padding: 0.5rem;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	background-color: var(--white-bg-color);
 }

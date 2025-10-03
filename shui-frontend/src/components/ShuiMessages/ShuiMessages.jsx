@@ -12,14 +12,15 @@ import SortByTimeButton from '../SortByTimeButton/SortByTimeButton';
 import { sortByOldest } from '../../utils/sortByOldest.js';
 import { TbClockDown } from 'react-icons/tb';
 import { TbClockUp } from 'react-icons/tb';
+import BackButton from '../BackButton/BackButton.jsx';
 function ShuiMessages({
 	messages,
 	user,
 	loading,
 	sortedMsgByOldest,
 	setSortMsgByOldest,
+	backButton,
 }) {
-	const [selectedCategory, setSelectedCategory] = useState(null);
 	const [currentMessages, setCurrentMessages] = useState(messages);
 	const [deleteMsgPopup, setDeleteMsgPopup] = useState(false);
 	const [deleteMsg, setDeleteMsg] = useState(null);
@@ -33,23 +34,19 @@ function ShuiMessages({
 		} else setCurrentMessages([]);
 	}, [messages]);
 
-	useEffect(() => {
-		if (selectedCategory === 'all') {
-			setSelectedCategory(messages);
-		} else {
-			const filteredMessages = messages.filter(
-				(m) => m.Category === selectedCategory
-			);
-			setCurrentMessages(filteredMessages);
-		}
-	}, [selectedCategory]);
-
 	const handledeleteMsgPopup = async () => {
 		const response = await deleteMessage(
 			deleteMsg.msgId,
 			deleteMsg.userId,
 			token
 		);
+		if (response.data.message === 'Token is invalid') {
+			return showMsg(
+				`Du har varit inaktiv för länge och behöver logga in igen`,
+				false,
+				() => navigate('/auth')
+			);
+		}
 
 		if (response.status === 200) {
 			setDeleteMsg(null);
@@ -116,21 +113,32 @@ function ShuiMessages({
 					</section>
 				)}
 				{currentMessages.length > 0 && (
-					<SortByTimeButton
-						className={'sort-time__btn'}
-						icon={
-							sortedMsgByOldest ? <TbClockDown /> : <TbClockUp />
-						}
-						text={`${
-							sortedMsgByOldest ? 'Äldst först' : 'Senast först'
-						}`}
-						onClick={() => handleSortByTime()}
-					/>
+					<section
+						className={`suit-messages__top-box ${
+							!backButton && 'suit-messages__top-box--flex-end'
+						}`}>
+						{backButton && <BackButton></BackButton>}
+						<SortByTimeButton
+							className={`sort-time__btn`}
+							icon={
+								sortedMsgByOldest ? (
+									<TbClockDown />
+								) : (
+									<TbClockUp />
+								)
+							}
+							text={`${
+								sortedMsgByOldest
+									? 'Äldst först'
+									: 'Senast först'
+							}`}
+							onClick={() => handleSortByTime()}
+						/>
+					</section>
 				)}
 				{currentMessages.map((message) => {
 					// Kontroll om inloggad user är samma som den som skrev meddelandet
 					const isOwnMessage = user.username === message.PK.slice(5);
-
 					return (
 						<section
 							className={`shui-msg__box ${message.Category}`}
@@ -147,8 +155,13 @@ function ShuiMessages({
 									</h3>
 									<span>
 										<Button
-											className={
-												'shui-msg__username-btn'
+											className={'shui-msg__username-btn'}
+											onClick={() =>
+												navigate(
+													`/user/${message.PK.slice(
+														5
+													)}/messages`
+												)
 											}>
 											{message.PK.slice(5)}
 										</Button>

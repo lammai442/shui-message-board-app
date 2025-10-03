@@ -7,7 +7,7 @@ function BackButton() {
 
 	return (
 		<button className='back-btn' onClick={() => navigate(-1)}>
-			<IoReturnUpBackOutline className='back-btn__icon' />
+			<IoReturnUpBackOutline />
 		</button>
 	);
 }

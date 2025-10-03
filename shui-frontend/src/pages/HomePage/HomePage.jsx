@@ -104,6 +104,7 @@ function HomePage() {
 					{/* Renderar ut meddelanden utifrån vald kategori */}
 					{selectedCategory && (
 						<ShuiMessages
+							backButton={false}
 							messages={messages}
 							user={user}
 							loading={loading}
