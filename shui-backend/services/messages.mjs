@@ -141,7 +141,7 @@ export const editMessage = async (msgData) => {
 		ExpressionAttributeValues: {
 			':message': { S: msgData.message },
 			':title': { S: msgData.title },
-			':gsi2pk': { S: `CATEGORY${msgData.category}` },
+			':gsi2pk': { S: `CATEGORY#${msgData.category}` },
 			':category': { S: msgData.category },
 			':modifiedAt': { S: new Date().toISOString() },
 		},

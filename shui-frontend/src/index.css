@@ -10,14 +10,14 @@
 
 :root {
 	/* BG colors */
-	--main-bg-color: #3697da; /* original blå */
-	--main-bg-color-light: #5eb0e0; /* ljusare blå */
-	--main-bg-color-dark: #2473a0; /* mörkare blå */
-	--main-bg-color-muted: #8bbfe5; /* mer “tonad” blå */
-	--main-bg-color-accent: #da6b36; /* komplementfärg, orange/brun */
-	--main-bg-color-soft: #cce5f7; /* mycket ljus blå, som bakgrund */
-	--main-bg-color-gradient-start: #3697da; /* för gradient */
-	--main-bg-color-gradient-end: #1e5f8a; /* mörkare blå för gradient */
+	--main-bg-color: #3697da;
+	--main-bg-color-light: #5eb0e0;
+	--main-bg-color-dark: #2473a0;
+	--main-bg-color-muted: #8bbfe5;
+	--main-bg-color-accent: #da6b36;
+	--main-bg-color-soft: #cce5f7;
+	--main-bg-color-gradient-start: #3697da;
+	--main-bg-color-gradient-end: #1e5f8a;
 	--white-bg-color: #ffffff;
 	--black-bg-color: #000;
 	--grey-bg-color: #f4f5f7;

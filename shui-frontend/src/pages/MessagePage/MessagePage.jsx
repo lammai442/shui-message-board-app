@@ -29,7 +29,6 @@ function MessagePage() {
 			}
 
 			const response = await fetchMessagesByUserId(user.username);
-			console.log(response);
 			if ((response.success = true)) {
 				setMessages(response.data);
 			} else {

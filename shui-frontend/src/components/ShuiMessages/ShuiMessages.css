@@ -15,6 +15,10 @@
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
+.shui-msg__box:last-child {
+	margin-bottom: 8rem;
+}
+
 .shui-msg__top-box {
 	display: flex;
 	gap: 0.5rem;
@@ -27,12 +31,15 @@
 
 .shui-msg__title {
 	font-size: var(--font-size-h3);
+	width: 100%;
+	overflow-wrap: break-word;
 }
 
 .shui-msg__text {
 	margin-top: 0.5rem;
 	font-size: var(--font-size-large-p);
 	font-style: italic;
+	overflow-wrap: break-word;
 }
 
 .shui-msg__empty {

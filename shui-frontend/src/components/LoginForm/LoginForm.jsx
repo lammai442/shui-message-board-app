@@ -16,6 +16,15 @@ function LoginForm({ setLoginForm, setLoading }) {
 	const showMsg = useMessageStore((state) => state.showMsg);
 	const updateUserStorage = useAuthStore((state) => state.updateUserStorage);
 
+	const handleGuestLogin = () => {
+		updateUserStorage({
+			username: 'Gäst',
+			avatar: '/avatars/avatar18',
+			role: 'guest',
+		});
+
+		showMsg('Du är inloggad som gäst!', true, () => navigate('/'));
+	};
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		setErrorFormMsg(null);
@@ -85,6 +94,13 @@ function LoginForm({ setLoginForm, setLoading }) {
 			{errorFormMsg && <p className='error_msg'>{errorFormMsg}</p>}
 			<Button className={'btn__form'} type={'submit'}>
 				LOGGA IN
+			</Button>
+			<hr />
+			<Button
+				className={'btn__form btn__form-guest'}
+				type={'button'}
+				onClick={handleGuestLogin}>
+				LOGGA IN SOM GÄST
 			</Button>
 			<p className='form__text'>
 				Inget konto?{' '}

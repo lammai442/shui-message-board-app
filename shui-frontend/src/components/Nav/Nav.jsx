@@ -7,11 +7,13 @@ import shuiLogoBlackBold from '../../assets/logo/shui-logo-black-bold.svg';
 import shuiLogoGroupBlack from '../../assets//logo/shui-logo-group-black-bold.svg';
 import shuiLogoBlackWrite from '../../assets//logo/shui-logo-black-write.svg';
 import Button from '../Button/Button';
+import { useMessageStore } from '../../stores/useMessageStore';
 
 function Nav({ openMenu, setOpenMenu }) {
 	const { avatar, username } = useAuthStore((state) => state.user);
 	const navigate = useNavigate();
 	const logout = useAuthStore((state) => state.logout);
+	const showMsg = useMessageStore((state) => state.showMsg);
 
 	const navItems = [
 		{
@@ -25,18 +27,21 @@ function Nav({ openMenu, setOpenMenu }) {
 			subtitle: 'Sprid en ny tanke',
 			customIcon: shuiLogoBlackWrite,
 			route: '/shuimessage',
+			protected: true,
 		},
 		{
 			title: 'Dina Shui',
 			subtitle: 'Överblick över dina tankar',
 			customIcon: shuiLogoBlackBold,
 			route: '/messages',
+			protected: true,
 		},
 		{
 			title: 'Profilsidan',
 			subtitle: 'Se och ändra din profil',
 			Icon: CgProfile,
 			route: '/profile',
+			protected: true,
 		},
 	];
 
@@ -63,10 +68,20 @@ function Nav({ openMenu, setOpenMenu }) {
 								key={navItem.title}
 								className='nav__links'
 								onClick={() => {
-									setOpenMenu(false);
-									setTimeout(() => {
-										navigate(navItem.route);
-									}, 500);
+									if (
+										username === 'Gäst' &&
+										navItem.protected
+									) {
+										showMsg(
+											'Gäster har inte tillgång till detta.',
+											false
+										);
+									} else {
+										setOpenMenu(false);
+										setTimeout(() => {
+											navigate(navItem.route);
+										}, 500);
+									}
 								}}>
 								{navItem.Icon ? (
 									<navItem.Icon className='nav__item-icon' />

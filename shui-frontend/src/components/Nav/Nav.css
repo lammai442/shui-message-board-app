@@ -1,8 +1,8 @@
 .nav {
 	position: fixed;
 	top: 0;
-	right: -60%;
-	width: 60%;
+	right: -70%;
+	width: 70%;
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -16,12 +16,12 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 40%;
+	width: 30%;
 	height: 100vh;
 }
 
 .nav__closed {
-	right: -60%;
+	right: -70%;
 }
 
 .nav__open {
@@ -42,6 +42,8 @@
 
 .nav__profile-title {
 	color: var(--white-text-color);
+	text-align: center;
+	margin-top: 0.5rem;
 }
 
 .nav__logut-btn {

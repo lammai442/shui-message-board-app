@@ -101,7 +101,12 @@ function ShuiMessages({ messages, user, loading, backButton }) {
 							className={'shui-msg__empty-new-shui'}
 							iconLeft={shuiLogoWhiteWrite}
 							onClick={() => {
-								navigate('/shuimessage');
+								if (user.username === 'Gäst') {
+									showMsg(
+										'Gäster har inte tillgång till detta.',
+										false
+									);
+								} else navigate('/shuimessage');
 							}}>
 							Nytt Shui
 						</Button>

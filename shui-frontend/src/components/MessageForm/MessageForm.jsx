@@ -5,7 +5,7 @@ import { validateMessage } from '../../utils/validators';
 import Select from 'react-select';
 import { useState } from 'react';
 import { useAuthStore } from '../../stores/useAuthStore';
-import { postMessage } from '../../api/message';
+import { editMessage, postMessage } from '../../api/message';
 import { useMessageStore } from '../../stores/useMessageStore';
 import { categoriesValues } from '../../data/data.js';
 import { useNavigate } from 'react-router-dom';
@@ -63,17 +63,34 @@ export function MessageForm({ setLoading }) {
 			setErrorFormMsg(validMessage);
 		} else {
 			setLoading(true);
-			const response = await postMessage(
-				{
-					username: user.username,
-					avatar: user.avatar,
-					category: selectedCategory.value,
-					title: title,
-					message: message,
-				},
-				user.token
-			);
+			let response = null;
+			console.log(prevMsg);
+
+			if (prevMsg) {
+				response = await editMessage(
+					{
+						userId: prevMsg.userId,
+						category: selectedCategory.value,
+						title: title,
+						message: message,
+						msgId: prevMsg.msgId,
+					},
+					user.token
+				);
+			} else {
+				response = await postMessage(
+					{
+						username: user.username,
+						avatar: user.avatar,
+						category: selectedCategory.value,
+						title: title,
+						message: message,
+					},
+					user.token
+				);
+			}
 			setLoading(false);
+			console.log(response);
 
 			if (response.data.message === 'Token is invalid') {
 				return showMsg(
@@ -90,7 +107,11 @@ export function MessageForm({ setLoading }) {
 				setTitle('');
 				setMessage('');
 				return showMsg(
-					'Ditt meddelande är publicerad',
+					`${
+						prevMsg
+							? 'Ditt meddelande är ändrad'
+							: 'Ditt meddelande är publicerad'
+					}`,
 					true,
 					navigate('/')
 				);
@@ -138,7 +159,7 @@ export function MessageForm({ setLoading }) {
 			</label>
 			{errorFormMsg && <p className='error_msg'>{errorFormMsg}</p>}
 			<Button className={'btn__form'} type={'submit'}>
-				PUBLICERA
+				{`${prevMsg ? 'ÄNDRA' : 'PUBLICERA'}`}
 			</Button>
 		</form>
 	);

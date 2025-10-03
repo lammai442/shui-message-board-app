@@ -1,7 +1,5 @@
 import './UserMessagePage.css';
 import Header from '../../components/Header/Header';
-import BackButton from '../../components/BackButton/BackButton';
-import MessageForm from '../../components/MessageForm/MessageForm';
 import Loading from '../../components/Loading/Loading';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';

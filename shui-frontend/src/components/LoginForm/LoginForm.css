@@ -20,6 +20,7 @@
 	padding: 0.5rem;
 	font-size: var(--font-size-large-p);
 	border-radius: 5px;
+	display: flex;
 }
 
 .form__showpassword {
@@ -36,4 +37,11 @@
 
 .form__link-bold {
 	font-weight: 700;
+}
+
+hr {
+	width: 80%;
+	margin: 1rem 0;
+	align-self: center;
+	border: 1px solid rgba(0, 0, 0, 0.4);
 }

@@ -29,15 +29,17 @@
 }
 
 .categories__btn-box--small {
-	gap: 0.4rem;
+	gap: 0.3rem;
 	flex-direction: row;
-}
-
-.categories__btn--active {
-	transform: scale(1.1);
 }
 
 .categories__btn-box--small button:not(.categories__btn--active) {
 	opacity: 0.5;
 	color: #333;
+}
+
+@media screen and (max-width: 420px) {
+	.categories__btn-box--small button {
+		font-size: 0.9rem;
+	}
 }

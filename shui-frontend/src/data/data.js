@@ -1,6 +1,5 @@
 import shuiLogoGroupBlack from '../assets/logo/shui-logo-group-black-bold.svg';
 import shuiLogoBlack from '../assets/logo/shui-logo-black.svg';
-import { FaRegLaugh } from 'react-icons/fa';
 import lightbulbRegular from '../assets/icons/lightbulb-regular-full.svg';
 import laugh from '../assets/icons/laugh.svg';
 import question from '../assets/icons/question.svg';
@@ -17,31 +16,31 @@ export const categories = [
 	{
 		category: 'all',
 		title: 'ALLA',
-		className: 'category-btn all-btn',
+		className: 'category-btn all-btn btn__box--flex-start',
 		iconLeft: shuiLogoGroupBlack,
 	},
 	{
 		category: 'tankar',
 		title: 'TANKAR',
-		className: 'category-btn tankar-btn',
+		className: 'category-btn tankar-btn btn__box--flex-start',
 		iconLeft: shuiLogoBlack,
 	},
 	{
 		category: 'humor',
 		title: 'HUMOR',
-		className: 'category-btn humor-btn',
+		className: 'category-btn humor-btn btn__box--flex-start',
 		iconLeft: laugh,
 	},
 	{
 		category: 'ideer',
 		title: 'IDÉER',
-		className: 'category-btn ideer-btn',
+		className: 'category-btn ideer-btn btn__box--flex-start',
 		iconLeft: lightbulbRegular,
 	},
 	{
 		category: 'frågor',
 		title: 'FRÅGOR',
-		className: 'category-btn frågor-btn',
+		className: 'category-btn frågor-btn btn__box--flex-start',
 		iconLeft: question,
 	},
 ];

@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from '../Button/Button';
 
 function SortByTimeButton({ className, text, icon, onClick }) {

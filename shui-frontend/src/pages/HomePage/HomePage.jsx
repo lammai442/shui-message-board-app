@@ -9,11 +9,13 @@ import ShuiMessages from '../../components/ShuiMessages/ShuiMessages';
 import Loading from '../../components/Loading/Loading';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { categories } from '../../data/data.js';
+import { useMessageStore } from '../../stores/useMessageStore.js';
 
 function HomePage() {
 	const [messages, setMessages] = useState([]);
 	const [selectedCategory, setSelectCategory] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const showMsg = useMessageStore((state) => state.showMsg);
 	const navigate = useNavigate();
 	const user = useAuthStore((state) => state.user);
 
@@ -37,11 +39,11 @@ function HomePage() {
 		} else {
 			const fetchCategoryMessages = async (selectedCategory) => {
 				try {
-					console.log(selectedCategory);
-
 					const messageData = await getMessagesByCategories(
 						selectedCategory
 					);
+					console.log(messageData);
+
 					setMessages(messageData.data.data);
 					setLoading(false);
 				} catch (error) {
@@ -52,7 +54,6 @@ function HomePage() {
 				}
 			};
 			fetchCategoryMessages(selectedCategory);
-			setSortMsgByOldest(false);
 		}
 	}, [selectedCategory]);
 
@@ -107,7 +108,6 @@ function HomePage() {
 							messages={messages}
 							user={user}
 							loading={loading}
-							setSortMsgByOldest={setSortMsgByOldest}
 						/>
 					)}
 				</section>
@@ -115,7 +115,11 @@ function HomePage() {
 			<Button
 				className={'btn__shui-msg'}
 				iconLeft={shuiLogoWhiteWrite}
-				onClick={() => navigate('/shuimessage')}>
+				onClick={() => {
+					if (user.username === 'Gäst') {
+						showMsg('Gäster har inte tillgång till detta.', false);
+					} else navigate('/shuimessage');
+				}}>
 				Nytt Shui
 			</Button>
 		</div>
