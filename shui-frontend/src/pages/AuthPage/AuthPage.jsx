@@ -4,12 +4,16 @@ import LoginForm from '../../components/LoginForm/LoginForm';
 import { useState } from 'react';
 import RegisterForm from '../../components/RegisterForm/RegisterForm';
 import Loading from '../../components/Loading/Loading';
+import Welcome from '../../components/Welcome/Welcome';
 
 function LoginPage() {
 	const [loginForm, setLoginForm] = useState(true);
 	const [loading, setLoading] = useState(false);
+	const [showWelcome, setShowWelcome] = useState(true);
+
 	return (
 		<main className='main__wrapper'>
+			{showWelcome && <Welcome setShowWelcome={setShowWelcome}></Welcome>}
 			{loading && (
 				<Loading
 					text={

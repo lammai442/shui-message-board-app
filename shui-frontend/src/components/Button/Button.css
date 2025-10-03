@@ -16,6 +16,19 @@
 	color: var(--white-text-color);
 }
 
+.welcome__btn {
+	position: absolute;
+	top: 640px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60%;
+	padding: 1rem;
+	font-size: var(--font-size-large-btn);
+	background-color: var(--btn-bg-color);
+	color: var(--white-text-color);
+	font-weight: 700;
+}
+
 .btn__form-guest {
 	background-color: var(--main-bg-color-accent);
 }
