@@ -13,20 +13,15 @@ import { sortByOldest } from '../../utils/sortByOldest.js';
 import { TbClockDown } from 'react-icons/tb';
 import { TbClockUp } from 'react-icons/tb';
 import BackButton from '../BackButton/BackButton.jsx';
-function ShuiMessages({
-	messages,
-	user,
-	loading,
-	sortedMsgByOldest,
-	setSortMsgByOldest,
-	backButton,
-}) {
+function ShuiMessages({ messages, user, loading, backButton }) {
 	const [currentMessages, setCurrentMessages] = useState(messages);
 	const [deleteMsgPopup, setDeleteMsgPopup] = useState(false);
 	const [deleteMsg, setDeleteMsg] = useState(null);
 	const showMsg = useMessageStore((state) => state.showMsg);
+	const [sortedMsgByOldest, setSortMsgByOldest] = useState(false);
 	const token = useAuthStore((state) => state.user.token);
 	const navigate = useNavigate();
+	const userId = useAuthStore((state) => state.user.username);
 
 	useEffect(() => {
 		if (messages && messages.length > 0) {
@@ -138,7 +133,7 @@ function ShuiMessages({
 				)}
 				{currentMessages.map((message) => {
 					// Kontroll om inloggad user är samma som den som skrev meddelandet
-					const isOwnMessage = user.username === message.PK.slice(5);
+					const isOwnMessage = userId === message.PK.slice(5);
 					return (
 						<section
 							className={`shui-msg__box ${message.Category}`}

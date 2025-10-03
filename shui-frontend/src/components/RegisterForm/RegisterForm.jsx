@@ -25,6 +25,15 @@ function RegisterForm({ setLoginForm, setLoading }) {
 	const registerUser = async (e) => {
 		e.preventDefault();
 
+		if (
+			usernameRef.current.value === 'guest' ||
+			usernameRef.current.value === 'Guest'
+		) {
+			return setErrorFormMsg(
+				'Användarnamnet Guest är reserverad för gästinloggning'
+			);
+		}
+
 		const validateUserForm = validateUser({
 			username: usernameRef.current.value,
 			password: passwordRef.current.value,

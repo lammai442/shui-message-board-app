@@ -14,7 +14,6 @@ function HomePage() {
 	const [messages, setMessages] = useState([]);
 	const [selectedCategory, setSelectCategory] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const [sortedMsgByOldest, setSortMsgByOldest] = useState(false);
 	const navigate = useNavigate();
 	const user = useAuthStore((state) => state.user);
 
@@ -109,7 +108,6 @@ function HomePage() {
 							user={user}
 							loading={loading}
 							setSortMsgByOldest={setSortMsgByOldest}
-							sortedMsgByOldest={sortedMsgByOldest}
 						/>
 					)}
 				</section>

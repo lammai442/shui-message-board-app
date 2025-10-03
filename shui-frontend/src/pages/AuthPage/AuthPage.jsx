@@ -9,7 +9,7 @@ function LoginPage() {
 	const [loginForm, setLoginForm] = useState(true);
 	const [loading, setLoading] = useState(false);
 	return (
-		<main>
+		<main className='main__wrapper'>
 			{loading && (
 				<Loading
 					text={

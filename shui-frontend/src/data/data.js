@@ -48,7 +48,7 @@ export const categories = [
 
 export const categoriesValues = [
 	{ value: 'tankar', label: 'Tankar' },
+	{ value: 'humor', label: 'Humor' },
 	{ value: 'ideer', label: 'Idéer' },
 	{ value: 'frågor', label: 'Frågor' },
-	{ value: 'humor', label: 'Humor' },
 ];

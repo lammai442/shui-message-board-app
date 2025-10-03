@@ -31,6 +31,7 @@
 
 .form__link-btn {
 	display: inline-block;
+	font-size: var(--font-size-large-p);
 }
 
 .form__link-bold {
