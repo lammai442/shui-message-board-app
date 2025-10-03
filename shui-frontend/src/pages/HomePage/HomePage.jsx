@@ -42,7 +42,6 @@ function HomePage() {
 					const messageData = await getMessagesByCategories(
 						selectedCategory
 					);
-					console.log(messageData);
 
 					setMessages(messageData.data.data);
 					setLoading(false);

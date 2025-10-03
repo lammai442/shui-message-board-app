@@ -135,7 +135,6 @@ function RegisterForm({ setLoginForm, setLoading }) {
 						className='form__input'
 						type='text'
 						ref={usernameRef}
-						defaultValue={'adamek12'}
 						required
 					/>
 				</label>
@@ -145,7 +144,6 @@ function RegisterForm({ setLoginForm, setLoading }) {
 						className='form__input'
 						type={showPsw ? 'text' : 'password'}
 						ref={passwordRef}
-						defaultValue={'Abc123'}
 						required
 					/>{' '}
 					{showPsw ? (
@@ -166,7 +164,6 @@ function RegisterForm({ setLoginForm, setLoading }) {
 						className='form__input'
 						type='email'
 						ref={emailRef}
-						defaultValue={'adam@ek.se'}
 						required
 					/>
 				</label>
@@ -177,6 +174,7 @@ function RegisterForm({ setLoginForm, setLoading }) {
 				<p className='form__text'>
 					Redan medlem?{' '}
 					<Button
+						type={'button'}
 						className='form__link-btn form__link-bold'
 						onClick={() => setLoginForm(true)}>
 						Logga in här
