@@ -1,4 +1,5 @@
 # Shui Message Board App
+<img width="100" height="90" alt="SHUI logo" src="https://github.com/user-attachments/assets/f56a4ec3-0d60-4b05-9b66-3f39d827fcbd" />
 
 <a href="http://shui-message-board-app.s3-website.eu-north-1.amazonaws.com" target="_blank" rel="noopener noreferrer">Visit the live website</a>
 
